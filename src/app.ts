@@ -72,6 +72,7 @@ mongoose
     .connect(config.DB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        dbName: 'ekip_auto_DB',
     } as ConnectOptions)
     .then(() => {
         // eslint-disable-next-line no-console
@@ -85,7 +86,7 @@ passport.use(JWTAuthStrategy)
 passport.use(new AnonymousStrategy())
 
 // Routes
-app.use('api', apiRoutes)
+app.use(apiRoutes)
 
 app.set('view engine', 'ejs')
 

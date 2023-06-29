@@ -4,8 +4,8 @@ import { UserService } from '../../../services/UserServices'
 import { fifteenMinutesLimiter } from '../../../api/rateLimiter'
 import { SendError, SendResponse } from '../../../helpers'
 import { controllerWrapper, validation } from '../../../middlewares'
-import { validationPhoneForDDoS } from '../../../utils/utils'
 import { UserRole } from '../../../models/UserModel'
+import { generateRandomNumbers } from '../../../utils/utils'
 
 const schema = yup.object().shape({
     email: yup
@@ -32,16 +32,20 @@ const registerIntention = async (req: Request, res: Response) => {
 
     const hashedPassword = await UserService.setHashedPasswordToUserModel(password.trim())
 
+    const code = generateRandomNumbers(6)
+
+    // await EmailService.sendEmailToUserWithCodeToChangeEmailInProfile(email, user.firstName ? user.firstName : 'User', code)
     const user = await UserService.createUser({
         email: email.toLowerCase().trim(),
         password: hashedPassword,
         roles: [UserRole.USER],
+        codeToVerifyEmail: code,
     })
 
     return SendResponse.CREATED(res, 'Verification Email sent successfully', { user: user.getPublicInfo() })
 }
 
 export default {
-    middleware: [fifteenMinutesLimiter, validationPhoneForDDoS, validation(schema)],
+    middleware: [fifteenMinutesLimiter, validation(schema)],
     handler: controllerWrapper(registerIntention),
 }

@@ -7,10 +7,7 @@ import { SendError, SendResponse } from '../../../helpers'
 import { controllerWrapper, validation } from '../../../middlewares'
 
 const schema = yup.object().shape({
-    email: yup
-        .string()
-        .matches(/^\+[1-9]\d{1,14}$/)
-        .required(),
+    email: yup.string().email('Please, enter a valid email').required(),
     password: yup.string().min(8).max(50).required(),
 })
 
@@ -19,7 +16,7 @@ const loginConfirm = async (req: Request, res: Response) => {
 
     const user = await UserService.findUserByEmail(email)
 
-    if (!user) return SendError.BAD_REQUEST(res, 'User with this phone number doesn’t registered', { errorId: 'user_not_registered' })
+    if (!user) return SendError.BAD_REQUEST(res, 'User with this email doesn’t registered', { errorId: 'user_not_registered' })
 
     const isPasswordValid = await bcrypt.compare(password.trim(), user.password as string)
     if (!isPasswordValid) return SendError.BAD_REQUEST(res, 'Validation error please check credentials', { errorId: 'validation_error' })

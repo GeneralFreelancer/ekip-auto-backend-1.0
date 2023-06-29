@@ -1,11 +1,11 @@
 import getUser from './getUser'
 import removeUser from './removeUser'
-import requestUpdateUserEmail from './requestUpdateUserEmail'
-import updateEmail from './updateEmail'
+import requestVerificationEmail from './requestVerificationEmail'
+import updateData from './updateData'
 
 export default {
     getUser,
     removeUser,
-    requestUpdateUserEmail,
-    updateEmail,
+    requestVerificationEmail,
+    updateData,
 }

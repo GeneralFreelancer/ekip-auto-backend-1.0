@@ -4,9 +4,9 @@ const router = express.Router()
 
 router.get('/', UserController.getUser.middleware, UserController.getUser.handler)
 
-router.patch('/email', UserController.updateEmail.middleware, UserController.updateEmail.handler)
+router.put('/user-data', UserController.updateData.middleware, UserController.updateData.handler)
 
-router.post('/verification-email', UserController.requestUpdateUserEmail.middleware, UserController.requestUpdateUserEmail.handler)
+router.post('/verification-email', UserController.requestVerificationEmail.middleware, UserController.requestVerificationEmail.handler)
 
 router.delete('/', UserController.removeUser.middleware, UserController.removeUser.handler)
 

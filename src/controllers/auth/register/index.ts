@@ -1,7 +1,7 @@
 import registerIntention from './intention'
-// import registerConfirm from './confirm'
+import registerConfirm from './confirm'
 
 export default {
     registerIntention,
-    // registerConfirm,
+    registerConfirm,
 }

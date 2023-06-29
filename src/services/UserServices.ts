@@ -81,6 +81,10 @@ export class UserService {
         return await UserModel.findOne({ phone })
     }
 
+    static async findUserByEmailCode(code: string) {
+        return await UserModel.findOne({ codeToVerifyEmail: code })
+    }
+
     static async findUserByPhoneOrEmail(phone: string, email: string) {
         return await UserModel.find({ $or: [{ phone }, { email }] })
     }
