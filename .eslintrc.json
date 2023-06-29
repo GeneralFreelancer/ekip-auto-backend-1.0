@@ -1,0 +1,69 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "prettier"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json",
+    "files": ["*.ts"],
+    "allowImportExportEverywhere": true
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "no-unused-vars": 0, // as we will use typescript no-unused-vars rule instead
+    "@typescript-eslint/no-unused-vars": [
+      2,
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "quotes": [2, "single"],
+    "semi": 0, //  as we will use semicolons
+    "import/extensions": 0, // not require to mention type of a imported file
+    "object-curly-newline": 0, // leave it to prettier settings
+    "no-unsafe-optional-chaining": 0, // as we have typescript checking
+    "no-shadow": 0, // disable basic rule and use below to be compatible with tsc
+    "@typescript-eslint/no-shadow": 2,
+    "@typescript-eslint/no-non-null-assertion": 2, // set as error, to follow low warnings pattern
+    "no-use-before-define": 0, // conflict with tsc types/interfaces
+    "prettier/prettier": [
+      2,
+      {
+        "singleQuote": true,
+        "endOfLine": "auto",
+        "tabWidth": 4,
+        "insertSpaces": true,
+        "detectIndentation": false,
+        "printWidth": 180
+      }
+    ],
+    "import/no-cycle": 0,
+    "consistent-return": 0,
+    "@typescript-eslint/no-explicit-any": 2,
+    "no-console": 2,
+    "@typescript-eslint/ban-ts-comment": 0, // as we use ts-ignore only in exceptional situations
+    "no-plusplus": 0 // remove this rule, looks like our devs in love with that (especially at forlet loops i++)
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      },
+      "typescript": {}
+    }
+  },
+  "ignorePatterns": ["build"]
+}

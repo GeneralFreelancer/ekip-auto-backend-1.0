@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es2019",
+        "typeRoots": ["./node_modules/@types", "./src/types"],
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "module": "CommonJS",
+        "pretty": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "outDir": "./build",
+        "allowJs": true,
+        "noEmit": false,
+        "noEmitOnError": false,
+        "esModuleInterop": true,
+        "strict": true,
+        "rootDir": "./src",
+        "noUnusedLocals": false /* Report errors on unused locals. */,
+        "noUnusedParameters": false /* Report errors on unused parameters. */,
+        "noImplicitReturns": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+    },
+    "exclude": ["node_modules", "build", "tests"]
+}
