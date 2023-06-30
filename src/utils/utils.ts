@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios'
 import { Request, Response, NextFunction } from 'express'
-import { AccountBalance } from 'plaid'
 
 export const validationPhoneForDDoS = (req: Request, res: Response, next: NextFunction) => {
     const reg = /^(\+61)|(\+38)|(\+48)|(\+1)/
@@ -28,23 +27,6 @@ export const convertAmountIntoCents = (amount: number) => {
     return res
 }
 
-export const convertBalancesIntoCents = (balances: AccountBalance) => {
-    const { available, current, limit } = balances
-
-    const availableCents = available ? convertAmountIntoCents(available) : available
-    const currentCents = current ? convertAmountIntoCents(current) : current
-    const limitCents = limit ? convertAmountIntoCents(limit) : limit
-
-    const balancesCents = {
-        ...balances,
-        available: availableCents,
-        current: currentCents,
-        limit: limitCents,
-    }
-
-    return balancesCents as AccountBalance
-}
-
 export const getRandomBoolean = (percent: number) => {
     return Math.random() < percent / 100
 }
@@ -56,7 +38,7 @@ export const getErrorMessage = (e: unknown, customError?: string) => {
     return String(e)
 }
 
-export const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
+// export const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
 
 const generateRandomNumber = (max: number, min: number) => {
     return Math.floor(Math.random() * (max - min + 1) + min)

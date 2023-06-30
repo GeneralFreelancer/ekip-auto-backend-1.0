@@ -32,7 +32,7 @@ const config = {
     },
 }
 
-const secretesNamesList = ['DB', 'SENDGRID_API_KEY', 'SENDGRID_WEB_HOOK']
+const secretesNamesList = ['DB', 'SENDGRID_API_KEY', 'SENDGRID_WEB_HOOK', 'API_URL']
 
 const secretes = {}
 secretesNamesList.forEach(s => (secretes[s] = process.env[s]))

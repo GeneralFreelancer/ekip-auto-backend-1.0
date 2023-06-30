@@ -11,6 +11,7 @@ import apiRoutes from './api'
 import JWTAuthStrategy from './utils/passport'
 import config from './config'
 import { SendError } from './helpers'
+import path from 'path'
 
 const app = express()
 
@@ -87,7 +88,7 @@ passport.use(new AnonymousStrategy())
 
 // Routes
 app.use(apiRoutes)
-
+app.use('/images', express.static(path.join(__dirname, 'images')))
 app.set('view engine', 'ejs')
 
 // Unmatched routes

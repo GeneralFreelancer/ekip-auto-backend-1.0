@@ -1,6 +1,8 @@
 import { prop, getModelForClass, DocumentType, Severity } from '@typegoose/typegoose'
+import config from '../config'
+import ExchangeModel from './ExchangeModel'
 
-type Option = Record<string, string>
+type Options = Record<string, string>
 
 export class Product {
     @prop({ default: false, required: false, type: Boolean })
@@ -39,11 +41,11 @@ export class Product {
     @prop({ type: Number, required: true })
     public priceUAH?: number
 
-    @prop({ type: Array, required: false, allowMixed: Severity.ALLOW })
-    public options?: Option[]
+    @prop({ type: Object, required: false, _id: false, allowMixed: Severity.ALLOW })
+    public options?: Options
 
-    @prop({ type: Array, required: false, allowMixed: Severity.ALLOW })
-    public deliveryOptions?: Option[]
+    @prop({ type: Object, required: false, _id: false, allowMixed: Severity.ALLOW })
+    public deliveryOptions?: Options
 
     @prop({ type: Array, required: false, allowMixed: Severity.ALLOW })
     public pictures?: string[]
@@ -54,7 +56,13 @@ export class Product {
     @prop({ type: Date, required: false })
     public updatedAt?: Date
 
-    getPublicInfo(this: DocumentType<Product>) {
+    async getPublicInfo(this: DocumentType<Product>) {
+        let priceUAH = null
+        const pictures = this.pictures?.map(p => config.API_URL + 'images/' + p)
+        const exchange = await ExchangeModel.find()
+        if (exchange.length && this.priceUSD) {
+            priceUAH = (exchange[0].usdRate as number) * this.priceUSD
+        }
         return {
             id: this._id,
             inTopRate: this.inTopRate,
@@ -68,10 +76,10 @@ export class Product {
             quantity: this.quantity,
             minQuantity: this.minQuantity,
             priceUSD: this.priceUSD,
-            priceUAH: this.priceUAH,
+            priceUAH: priceUAH ? priceUAH : this.priceUAH,
             options: this.options,
             deliveryOptions: this.deliveryOptions,
-            pictures: this.pictures,
+            pictures,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         }

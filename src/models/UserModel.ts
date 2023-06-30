@@ -1,7 +1,7 @@
 import { DocumentType, getModelForClass, prop, Severity } from '@typegoose/typegoose'
 import { ObjectId } from 'mongodb'
 
-export enum UserRole {
+export enum UserRoles {
     USER = 'USER',
     ADMIN = 'ADMIN',
     TESTER = 'TESTER',
@@ -43,8 +43,8 @@ export class User {
     @prop({ default: false, required: false, type: Boolean })
     public isEmailConfirmed?: boolean
 
-    @prop({ type: String, enum: UserRole, required: true })
-    public roles!: UserRole[]
+    @prop({ type: String, enum: UserRoles, required: true })
+    public roles!: UserRoles[]
 
     @prop({ required: true, type: String })
     public password!: string

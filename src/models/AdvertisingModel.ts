@@ -5,15 +5,15 @@ export class AdvertisingObj {
     @prop({ type: String, required: false }) public url?: string
 }
 
-// export class Obj {
-//     desctop: AdvertisingObj[]
-//     tablet: AdvertisingObj[]
-//     mobile: AdvertisingObj[]
-// }
-
 export class Advertising {
     @prop({ type: AdvertisingObj, required: false, _id: false })
-    public advertisingObjs?: AdvertisingObj[]
+    public desktop?: AdvertisingObj[]
+
+    @prop({ type: AdvertisingObj, required: false, _id: false })
+    public tablet?: AdvertisingObj[]
+
+    @prop({ type: AdvertisingObj, required: false, _id: false })
+    public mobile?: AdvertisingObj[]
 
     @prop({ type: Date, required: false })
     public createdAt?: Date
@@ -23,7 +23,9 @@ export class Advertising {
 
     async getPublicInfo(this: DocumentType<Advertising>) {
         return {
-            advertisingObjs: this.advertisingObjs,
+            desktop: this.desktop,
+            tablet: this.desktop,
+            mobile: this.desktop,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         }

@@ -16,6 +16,7 @@ const registerConfirm = async (req: Request, res: Response) => {
 
     const token = await UserService.signToken(user)
     user.isEmailConfirmed = true
+    user.codeToVerifyEmail = undefined
 
     await user.save()
 

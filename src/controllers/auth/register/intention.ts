@@ -4,7 +4,7 @@ import { UserService } from '../../../services/UserServices'
 import { fifteenMinutesLimiter } from '../../../api/rateLimiter'
 import { SendError, SendResponse } from '../../../helpers'
 import { controllerWrapper, validation } from '../../../middlewares'
-import { UserRole } from '../../../models/UserModel'
+import { UserRoles } from '../../../models/UserModel'
 import { generateRandomNumbers } from '../../../utils/utils'
 
 const schema = yup.object().shape({
@@ -33,7 +33,7 @@ const registerIntention = async (req: Request, res: Response) => {
     const user = await UserService.createUser({
         email: email.toLowerCase().trim(),
         password: hashedPassword,
-        roles: [UserRole.USER],
+        roles: [UserRoles.USER],
         codeToVerifyEmail: code,
     })
 

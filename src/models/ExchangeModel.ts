@@ -1,8 +1,8 @@
 import { prop, getModelForClass, DocumentType } from '@typegoose/typegoose'
 
 export class Exchange {
-    @prop({ default: false, required: false, type: Boolean })
-    public usdRate?: boolean
+    @prop({ default: false, required: false, type: Number })
+    public usdRate?: number
 
     @prop({ type: Date, required: false })
     public createdAt?: Date

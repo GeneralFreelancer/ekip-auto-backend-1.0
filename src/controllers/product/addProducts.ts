@@ -1,30 +1,39 @@
-// import { Request, Response } from 'express'
-// import * as yup from 'yup'
-// import { User } from '../../models/UserModel'
-// // import { EmailService } from '../../services/EmailService'
-// import { DocumentType } from '@typegoose/typegoose'
-// import { SendError, SendResponse } from '../../helpers'
-// import { controllerWrapper, validation } from '../../middlewares'
-// import { generateRandomNumbers } from '../../utils/utils'
+import { Request, Response } from 'express'
+import * as yup from 'yup'
+import { SendError, SendResponse } from '../../helpers'
+import { controllerWrapper, validation } from '../../middlewares'
+import ProductService from '../../services/ProductServices'
 
-// const schema = yup.object().shape({
-//     email: yup.string().trim().email().min(3, 'Please enter your real email').required(),
-// })
+const schema = yup.object().shape({
+    products: yup.array().of(
+        yup.object().shape({
+            stock: yup.boolean(),
+            name: yup.string(),
+            description: yup.string(),
+            sku: yup.string(),
+            category: yup.string(),
+            subCategory: yup.string(),
+            quantity: yup.number(),
+            minQuantity: yup.number(),
+            priceUSD: yup.number(),
+            priceUAH: yup.number(),
+            options: yup.object().shape({}),
+            deliveryOptions: yup.object().shape({}),
+        }),
+    ),
+})
 
-// const addProducts = async (req: Request, res: Response) => {
-//     const user = req.user as DocumentType<User>
-//     if (!user) return SendError.UNAUTHORIZED(res, 'Maybe you forgot a token', { errorId: 'not_authorized' })
+const addProducts = async (req: Request, res: Response) => {
+    const { products } = req.body
 
-//     const code = generateRandomNumbers(6)
+    if (!products || !products.length) return SendError.BAD_REQUEST(res, 'Помилка додавання')
 
-//     // await EmailService.sendEmailToUserWithCodeToChangeEmailInProfile(email, user.firstName ? user.firstName : 'User', code)
-//     user.codeToVerifyEmail = code
-//     await user.save()
+    await ProductService.createOrUpdateProducts(products)
 
-//     return SendResponse.OK(res, 'email was sent successfully', { user: user.getPublicInfo() })
-// }
+    return SendResponse.OK(res, 'Продукти додано', {})
+}
 
-// export default {
-//     middleware: [validation(schema)],
-//     handler: controllerWrapper(addProducts),
-// }
+export default {
+    middleware: [validation(schema)],
+    handler: controllerWrapper(addProducts),
+}
