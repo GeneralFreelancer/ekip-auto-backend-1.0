@@ -9,12 +9,12 @@ import { controllerWrapper, validation } from '../../middlewares'
 import { generateRandomNumbers } from '../../utils/utils'
 
 const schema = yup.object().shape({
-    email: yup.string().trim().email().min(3, 'Please enter your real email').required(),
+    email: yup.string().trim().email().min(3).required(),
 })
 
 const requestVerificationEmail = async (req: Request, res: Response) => {
     const user = req.user as DocumentType<User>
-    if (!user) return SendError.UNAUTHORIZED(res, 'Maybe you forgot a token', { errorId: 'not_authorized' })
+    if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайдено', { errorId: 'not_authorized' })
 
     const code = generateRandomNumbers(6)
 
@@ -22,7 +22,7 @@ const requestVerificationEmail = async (req: Request, res: Response) => {
     user.codeToVerifyEmail = code
     await user.save()
 
-    return SendResponse.OK(res, 'email was sent successfully', { user: user.getPublicInfo() })
+    return SendResponse.OK(res, 'На вашу пошту надіслано лист для підтвердження', { user: user.getPublicInfo() })
 }
 
 export default {

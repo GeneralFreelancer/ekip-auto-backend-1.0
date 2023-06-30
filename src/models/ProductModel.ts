@@ -19,7 +19,7 @@ export class Product {
     public description?: string
 
     @prop({ type: String, required: true })
-    public art?: string
+    public sku?: string
 
     @prop({ type: String, required: true })
     public category?: string
@@ -37,7 +37,7 @@ export class Product {
     public priceUSD?: number
 
     @prop({ type: Number, required: true })
-    public priceGRN?: number
+    public priceUAH?: number
 
     @prop({ type: Array, required: false, allowMixed: Severity.ALLOW })
     public options?: Option[]
@@ -62,13 +62,13 @@ export class Product {
             hidden: this.hidden,
             name: this.name,
             description: this.description,
-            art: this.art,
+            sku: this.sku,
             category: this.category,
             subCategory: this.subCategory,
             quantity: this.quantity,
             minQuantity: this.minQuantity,
             priceUSD: this.priceUSD,
-            priceGRN: this.priceGRN,
+            priceUAH: this.priceUAH,
             options: this.options,
             deliveryOptions: this.deliveryOptions,
             pictures: this.pictures,

@@ -8,22 +8,22 @@ import UserService from '../../services/UserServices'
 const schema = yup.object().shape({
     phone: yup
         .string()
-        .matches(/^\+[1-9]\d{1,14}$/, 'Phone should have a valid format')
-        .min(1, 'Phone number cannot be an empty field')
-        .max(15, 'Phone should have a maximum length of 15'),
-    firstName: yup.string().trim().min(2, 'FirstName name should have a minimum length of 2').max(50, 'FirstName name should have a maximum length of 50'),
-    secondName: yup.string().trim().min(2, 'FirstName name should have a minimum length of 2').max(50, 'FirstName name should have a maximum length of 50'),
-    lastName: yup.string().trim().min(2, 'LastName name should have a minimum length of 2').max(50, 'LastName name should have a maximum length of 50'),
-    email: yup.string().trim().min(1, 'Email cannot be an empty field').max(100, 'Email should have a maximum length of 100').email('Please, enter a valid email'),
-    street: yup.string().trim().min(2, 'LastName name should have a minimum length of 2').max(50, 'LastName name should have a maximum length of 50'),
-    city: yup.string().trim().min(2, 'LastName name should have a minimum length of 2').max(50, 'LastName name should have a maximum length of 50'),
-    additionalInfo: yup.string().trim().min(2, 'LastName name should have a minimum length of 2'),
+        .matches(/^\+[1-9]\d{1,14}$/, 'Не вірний телефон')
+        .min(1, 'Поле не може бути пустим')
+        .max(15, 'Довжина поля з номером телефону не може бути більше 15 символів'),
+    firstName: yup.string().trim().min(2, 'Поле не може бути пустим').max(50, 'Довжина поля імені не може бути більше 50 символів'),
+    secondName: yup.string().trim().min(2, 'Поле не може бути пустим').max(50, 'Довжина поля імені не може бути більше 50 символів'),
+    lastName: yup.string().trim().min(2, 'Поле не може бути пустим').max(50, 'Довжина поля імені не може бути більше 50 символів'),
+    email: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля пошти не може бути більше 100 символів').email('Емеіл не валідний'),
+    street: yup.string().trim().min(1, 'Поле не може бути пустим'),
+    city: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля Місто не може бути більше 100 символів'),
+    additionalInfo: yup.string().trim().min(1, 'Поле не може бути пустим'),
 })
 
 const updateEmail = async (req: Request, res: Response) => {
     const user = req.user
-    if (!user) return SendError.UNAUTHORIZED(res, 'User with this token is not exist')
-    if (!user.isEmailConfirmed) return SendError.UNAUTHORIZED(res, 'You need to confirm email')
+    if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайденоt')
+    if (!user.isEmailConfirmed) return SendError.UNAUTHORIZED(res, 'Вам потрібно підтвердити email')
 
     const { phone, firstName, secondName, lastName, email, street, city, additionalInfo } = req.body
 
@@ -33,24 +33,24 @@ const updateEmail = async (req: Request, res: Response) => {
 
     if (phone && phone.trim() !== user.phone) {
         const registeredUserByPhone = await UserService.findUserByPhone(phone)
-        if (registeredUserByPhone) return SendError.CONFLICT(res, 'User with this phone already registered', { errorField: 'phone' })
+        if (registeredUserByPhone) return SendError.CONFLICT(res, 'Користувач з даним номером телефону вже зареєстрований', { errorField: 'phone' })
     }
 
     if (email && email.toLowerCase().trim() !== user.email) {
         const registeredUserByEmail = await UserService.findUserByEmail(email)
-        if (registeredUserByEmail) return SendError.CONFLICT(res, 'User with this email already registered', { errorField: 'phone' })
+        if (registeredUserByEmail) return SendError.CONFLICT(res, 'Користувач з даною поштою вже зареєстрований', { errorField: 'phone' })
     }
 
     if (phone) user.phone = phone.trim()
-    if (phone) user.email = email.toLowerCase().trim()
-    if (firstName) user.phone = firstName.trim()
-    if (secondName) user.phone = secondName.trim()
-    if (lastName) user.phone = lastName.trim()
+    if (email) user.email = email.toLowerCase().trim()
+    if (firstName) user.firstName = firstName.trim()
+    if (secondName) user.secondName = secondName.trim()
+    if (lastName) user.lastName = lastName.trim()
     if (livingAddress) user.livingAddress = livingAddress
 
     await user.save()
 
-    return SendResponse.ACCEPTED(res, 'Email successfully updated', { user: user.getPublicInfo() })
+    return SendResponse.ACCEPTED(res, 'Дані збережено', { user: user.getPublicInfo() })
 }
 
 export default {

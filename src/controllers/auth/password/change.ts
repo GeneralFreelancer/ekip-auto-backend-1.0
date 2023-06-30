@@ -11,7 +11,7 @@ const schema = yup.object().shape({
 
 const changePassword = async (req: Request, res: Response) => {
     const user = req.user
-    if (!user) return SendError.UNAUTHORIZED(res, 'User with this token is not exist', { errorId: 'user_not_authorized' })
+    if (!user) return SendError.UNAUTHORIZED(res, 'UКористувача не знайдено', { errorId: 'user_not_authorized' })
 
     const { password } = req.body
 
@@ -19,7 +19,7 @@ const changePassword = async (req: Request, res: Response) => {
     user.password = hashedPassword
     await user.save()
 
-    return SendResponse.OK(res, 'You have successfully changed password', {})
+    return SendResponse.OK(res, 'Пароль успішно змінено', {})
 }
 
 export default {

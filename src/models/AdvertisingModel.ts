@@ -1,11 +1,15 @@
 import { prop, getModelForClass, DocumentType } from '@typegoose/typegoose'
 
 export class AdvertisingObj {
-    @prop({ type: String, required: false }) public imageDesc?: string
-    @prop({ type: String, required: false }) public imageTablet?: string
-    @prop({ type: String, required: false }) public imageMobile?: string
-    @prop({ type: Number, required: false }) public url?: number
+    @prop({ type: String, required: false }) public image?: string
+    @prop({ type: String, required: false }) public url?: string
 }
+
+// export class Obj {
+//     desctop: AdvertisingObj[]
+//     tablet: AdvertisingObj[]
+//     mobile: AdvertisingObj[]
+// }
 
 export class Advertising {
     @prop({ type: AdvertisingObj, required: false, _id: false })

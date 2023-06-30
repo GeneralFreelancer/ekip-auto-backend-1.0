@@ -5,7 +5,7 @@ import { controllerWrapper } from '../../middlewares'
 
 const getUser = async (req: Request, res: Response) => {
     const user = req.user
-    if (!user) return SendError.NOT_FOUND(res, 'User not found', { errorId: 'not_authorized' })
+    if (!user) return SendError.NOT_FOUND(res, 'Користувача не знайдено', { errorId: 'not_authorized' })
 
     return SendResponse.OK(res, 'User', { user: user.getPublicInfo() })
 }

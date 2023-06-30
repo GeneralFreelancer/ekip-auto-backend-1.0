@@ -11,16 +11,11 @@ const schema = yup.object().shape({
     email: yup
         .string()
         .trim()
-        .min(1, 'Email cannot be an empty field')
-        .max(100, 'Email should have a maximum length of 100')
-        .email('Please, enter a valid email')
-        .required('Email is a required field'),
-    password: yup
-        .string()
-        .trim()
-        .min(8, 'Password should have a minimum length of 8')
-        .max(50, 'Password should have a maximum length of 50')
-        .required('Password is a required field'),
+        .min(1, 'Email не може бути пустим')
+        .max(100, 'Email не може бути довжиною більше 100')
+        .email('Внесіть валідний email')
+        .required('Email обовязкове поле'),
+    password: yup.string().trim().min(8, 'Мінімальна довжина пароля 8 символів').max(50, 'Максимальна довжина пароля 50 символів').required('Пароль обовязкове поле'),
 })
 
 const registerIntention = async (req: Request, res: Response) => {
@@ -28,7 +23,7 @@ const registerIntention = async (req: Request, res: Response) => {
 
     const registeredUser = await UserService.findUserByEmail(email.toLowerCase().trim())
 
-    if (registeredUser) return SendError.CONFLICT(res, 'User with this email already registered', { errorField: 'email' })
+    if (registeredUser) return SendError.CONFLICT(res, 'Користувач з даною поштою вже зареєстрований', { errorField: 'email' })
 
     const hashedPassword = await UserService.setHashedPasswordToUserModel(password.trim())
 
@@ -42,7 +37,7 @@ const registerIntention = async (req: Request, res: Response) => {
         codeToVerifyEmail: code,
     })
 
-    return SendResponse.CREATED(res, 'Verification Email sent successfully', { user: user.getPublicInfo() })
+    return SendResponse.CREATED(res, 'На вашу пошту надіслано лист для підтвердження', { user: user.getPublicInfo() })
 }
 
 export default {

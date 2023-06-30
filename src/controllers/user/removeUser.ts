@@ -6,12 +6,12 @@ import { SendError, SendResponse } from '../../helpers'
 
 const removeUser = async (req: Request, res: Response) => {
     const user = req.user
-    if (!user) return SendError.UNAUTHORIZED(res, 'User with this token is not exist')
+    if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайдено')
 
     const removedUser = await UserService.deleteUser(user._id)
-    if (!removedUser) return SendError.BAD_REQUEST(res, 'Something went wrong')
+    if (!removedUser) return SendError.BAD_REQUEST(res, 'Щось пішло не так')
 
-    return SendResponse.OK(res, 'User deleted successfully', { removedUser })
+    return SendResponse.OK(res, 'Користувач видалений', { removedUser })
 }
 
 export default {

@@ -3,7 +3,7 @@ import { Product } from './ProductModel'
 import { User } from './UserModel'
 
 export class ProductInBasket {
-    @prop({ ref: Product, required: true }) public products!: Ref<Product>
+    @prop({ ref: Product, required: true }) public product!: Ref<Product>
     @prop({ type: Number, required: true }) public number!: number
 }
 
