@@ -33,6 +33,10 @@ export class UserService {
         return await bcrypt.hash(password.trim(), 10)
     }
 
+    static async findAllUsers() {
+        return await UserModel.find()
+    }
+
     static async findUserByPhone(phone: string) {
         return await UserModel.findOne({ phone })
     }
@@ -62,6 +66,23 @@ export class UserService {
             consoleError('MethodServices.deleteUser', getErrorMessage(error))
             return
         }
+    }
+
+    static async updateFavoriteProducts(user: DocumentType<User>, productId: string) {
+        if (!user.favoriteProducts || !user.favoriteProducts.length) user.favoriteProducts = [productId]
+        else {
+            if (user.favoriteProducts.includes(productId)) user.favoriteProducts = user.favoriteProducts.filter(p => p !== productId)
+            else user.favoriteProducts.unshift(productId)
+        }
+        await user.save()
+        return user.getPublicInfo()
+    }
+
+    static async updateLastSeenProducts(user: DocumentType<User>, productId: string) {
+        if (!user.lastSeenProducts || !user.lastSeenProducts.length) user.lastSeenProducts = [productId]
+        else if (!user.lastSeenProducts.includes(productId)) user.lastSeenProducts.unshift(productId)
+        await user.save()
+        return user.getPublicInfo()
     }
 }
 

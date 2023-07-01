@@ -3,6 +3,24 @@ import ProductModel, { Product } from '../models/ProductModel'
 import { DocumentType } from '@typegoose/typegoose'
 import * as path from 'path'
 import * as fs from 'fs'
+import { ObjectId } from 'mongodb'
+import UserService from './UserServices'
+
+export enum ProductFilter {
+    DATE = 'date',
+    TOP = 'top',
+    LAST_SEEN = 'last_seen',
+    INTEREST = 'interest',
+}
+
+export interface IGetFilteredProducts {
+    search?: string
+    filter?: ProductFilter
+    category?: string
+    subcategory?: string
+    limit?: number
+    userId?: string
+}
 
 export class ProductService {
     static async createProduct(fields: Partial<Product>) {
@@ -16,6 +34,11 @@ export class ProductService {
             const productDB = await this.findProductBySku(product.sku as string)
             if (!productDB) await this.createProduct(product)
             else await this.updateProduct(productDB._id, product)
+        }
+        const productsDB = await ProductModel.find()
+        for (let i = 0; i < productsDB.length; i++) {
+            const productDB = productsDB[i]
+            if (!products.some(p => p.sku === productDB.sku)) await this.delProduct(productDB._id)
         }
     }
 
@@ -59,7 +82,7 @@ export class ProductService {
         return products
     }
 
-    static async delProduct(id: string) {
+    static async delProduct(id: string | Types.ObjectId) {
         const product = await ProductModel.findByIdAndDelete(id)
         if (!product) return null
         if (product.pictures?.length)
@@ -68,6 +91,87 @@ export class ProductService {
             })
 
         return product
+    }
+
+    static async checkProducts() {
+        const products = await ProductModel.find()
+        for (let i = 0; i < products.length; i++) {
+            const product = products[i]
+            if (!product.priceUAH && !product.priceUSD) {
+                product.hidden = true
+                await product.save()
+            }
+        }
+    }
+
+    static async getFilteredProducts({ search, filter, category, subcategory, limit, userId }: IGetFilteredProducts) {
+        const validUserId = userId && ObjectId.isValid(userId) ? userId : undefined
+
+        if (validUserId && filter === ProductFilter.LAST_SEEN) return await this.findUserLastSeenProducts(validUserId)
+
+        if (filter === ProductFilter.LAST_SEEN) return await this.findAllLastSeenProducts()
+
+        if (filter === ProductFilter.INTEREST) return await this.findInterestProducts()
+
+        let model = {}
+
+        if (search) {
+            const regex = new RegExp(search, 'i')
+            model = { name: regex }
+        } else if (subcategory) {
+            model = { subcategory }
+        } else if (category) model = { category }
+
+        const productsDB = limit ? await ProductModel.find(model).limit(limit) : await ProductModel.find(model)
+        const promise = productsDB.map(async p => await p.getPublicInfo())
+        const products = await Promise.all(promise)
+        return products
+    }
+
+    static async findUserLastSeenProducts(userId: string) {
+        const user = await UserService.findUserById(userId)
+        if (user && user.lastSeenProducts?.length) {
+            const productsDB = await ProductModel.find({ _id: { $in: user.lastSeenProducts } })
+            const promise = productsDB.map(async p => await p.getPublicInfo())
+            const products = await Promise.all(promise)
+            return products
+        } else return []
+    }
+
+    static async findAllLastSeenProducts() {
+        const sortedProducts: { productId: string; number: number }[] = []
+        const users = await UserService.findAllUsers()
+        users.forEach(user => {
+            if (user.lastSeenProducts?.length) {
+                user.lastSeenProducts.forEach(productId => {
+                    if (sortedProducts.some(p => p.productId === productId)) {
+                        const index = sortedProducts.findIndex(p => p.productId === productId)
+                        sortedProducts[index].number = sortedProducts[index].number + 1
+                    } else sortedProducts.push({ productId, number: 1 })
+                })
+            }
+        })
+        sortedProducts.sort((a, b) => b.number - a.number)
+        const sortedIds = sortedProducts.map(p => p.productId)
+        const lastSeenProductsDB = await ProductModel.find({ _id: { $in: sortedIds } })
+        const allProductsDB = await ProductModel.find()
+        const notSeenProductsDB = allProductsDB.filter(allP => {
+            if (lastSeenProductsDB.some(seenP => String(seenP._id) === String(allP._id))) return false
+            else return true
+        })
+        const productsDB = [...lastSeenProductsDB, ...notSeenProductsDB]
+        const promise = productsDB.map(async p => await p.getPublicInfo())
+        const products = await Promise.all(promise)
+        return products
+    }
+
+    static async findInterestProducts() {
+        const productsDB = await ProductModel.find()
+        const filteredProductsDB = productsDB.filter(p => p.quantity && typeof p.quantity === 'number')
+        filteredProductsDB.sort((a, b) => (b.quantity as number) - (a.quantity as number))
+        const promise = filteredProductsDB.map(async p => await p.getPublicInfo())
+        const products = await Promise.all(promise)
+        return products
     }
 }
 

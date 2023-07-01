@@ -53,10 +53,10 @@ export class User {
     public codeToVerifyEmail?: string
 
     @prop({ type: Array, required: false, allowMixed: Severity.ALLOW })
-    public favoriteGoods?: string[]
+    public favoriteProducts?: string[]
 
     @prop({ type: Array, required: false, allowMixed: Severity.ALLOW })
-    public lastSeenGoods?: string[]
+    public lastSeenProducts?: string[]
 
     @prop({ type: Date, required: false })
     public createdAt?: Date

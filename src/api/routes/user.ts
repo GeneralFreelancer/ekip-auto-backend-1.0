@@ -6,6 +6,10 @@ router.get('/', UserController.getUser.middleware, UserController.getUser.handle
 
 router.put('/user-data', UserController.updateData.middleware, UserController.updateData.handler)
 
+router.patch('/favorite', UserController.updateFavoriteProducts.middleware, UserController.updateFavoriteProducts.handler)
+
+router.patch('/last-seen', UserController.updateLastSeenProducts.middleware, UserController.updateLastSeenProducts.handler)
+
 router.post('/verification-email', UserController.requestVerificationEmail.middleware, UserController.requestVerificationEmail.handler)
 
 router.delete('/', UserController.removeUser.middleware, UserController.removeUser.handler)
