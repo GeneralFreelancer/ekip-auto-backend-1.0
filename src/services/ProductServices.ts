@@ -93,7 +93,8 @@ export class ProductService {
         return product
     }
 
-    static async checkProducts() {
+    static async checkProductsAndGetCategories() {
+        const categories: { category: string; subcategories: string[] }[] = []
         const products = await ProductModel.find()
         for (let i = 0; i < products.length; i++) {
             const product = products[i]
@@ -101,7 +102,14 @@ export class ProductService {
                 product.hidden = true
                 await product.save()
             }
+            if (product.category && !categories.some(c => c.category === product.category)) categories.push({ category: product.category, subcategories: [] })
+            if (product.subCategory && product.category) {
+                const index = categories.findIndex(c => c.category === product.category)
+                if (index !== -1 && !categories[index].subcategories.some(sc => sc === product.subCategory)) categories[index].subcategories.push(product.subCategory)
+            }
         }
+
+        return categories
     }
 
     static async getFilteredProducts({ search, filter, category, subcategory, limit, userId }: IGetFilteredProducts) {

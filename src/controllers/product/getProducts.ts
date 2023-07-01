@@ -6,10 +6,10 @@ import ProductService, { IGetFilteredProducts } from '../../services/ProductServ
 const getProducts = async (req: Request, res: Response) => {
     const { search, filter, category, subcategory, limit, userId }: IGetFilteredProducts = req.query
 
-    await ProductService.checkProducts()
+    const categories = await ProductService.checkProductsAndGetCategories()
     const products = await ProductService.getFilteredProducts({ search, filter, category, subcategory, limit, userId })
 
-    return SendResponse.OK(res, 'Товари', { products })
+    return SendResponse.OK(res, 'Товари та категорії', { categories, products })
 }
 
 export default {

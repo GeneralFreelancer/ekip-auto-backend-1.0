@@ -76,6 +76,8 @@ export class User {
             isEmailConfirmed: this.isEmailConfirmed,
             roles: this.roles,
             codeToVerifyEmail: this.codeToVerifyEmail,
+            favoriteProducts: this.favoriteProducts,
+            lastSeenProducts: this.lastSeenProducts,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         }
