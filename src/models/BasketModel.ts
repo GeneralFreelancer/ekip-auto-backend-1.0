@@ -1,9 +1,10 @@
 import { prop, getModelForClass, Ref, DocumentType } from '@typegoose/typegoose'
+import ProductService from '../services/ProductServices'
 import { Product } from './ProductModel'
 import { User } from './UserModel'
 
 export class ProductInBasket {
-    @prop({ ref: Product, required: true }) public product!: Ref<Product>
+    @prop({ ref: Product, required: true }) public product!: string
     @prop({ type: Number, required: true }) public number!: number
 }
 
@@ -21,9 +22,18 @@ export class Basket {
     public updatedAt?: Date
 
     async getPublicInfo(this: DocumentType<Basket>) {
+        let products = null
+        if (this.products && this.products.length) {
+            const promises = this.products.map(async p => {
+                const product = await ProductService.findProductById(p.product)
+                return { product, number: p.number }
+            })
+            products = await Promise.all(promises)
+        }
+
         return {
             id: this._id,
-            products: this.products,
+            products,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         }
