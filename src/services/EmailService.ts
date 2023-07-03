@@ -18,7 +18,7 @@ export class EmailService {
                     email: 'ekip.auto.production@gmail.com',
                 }, // Change to your verified sender
                 subject: 'Email verification',
-                text: `Follow the link to verify your email: ${config.CLIENT_URL}/${code}`,
+                text: `Follow the link to verify your email: ${config.CLIENT_URL}/confirm-email/${code}`,
             }
             const response = await sgMail.send(msg)
             return response

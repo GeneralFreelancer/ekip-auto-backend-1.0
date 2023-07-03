@@ -6,18 +6,14 @@ import { SendError, SendResponse } from '../../helpers'
 import UserService from '../../services/UserServices'
 
 const schema = yup.object().shape({
-    phone: yup
-        .string()
-        .matches(/^\+[1-9]\d{1,14}$/, 'Не вірний телефон')
-        .min(1, 'Поле не може бути пустим')
-        .max(15, 'Довжина поля з номером телефону не може бути більше 15 символів'),
+    phone: yup.string().min(1, 'Поле не може бути пустим').max(20, 'Довжина поля з номером телефону не може бути більше 20 символів'),
     firstName: yup.string().trim().min(2, 'Поле не може бути пустим').max(50, 'Довжина поля імені не може бути більше 50 символів'),
-    secondName: yup.string().trim().min(2, 'Поле не може бути пустим').max(50, 'Довжина поля імені не може бути більше 50 символів'),
+    secondName: yup.string(),
     lastName: yup.string().trim().min(2, 'Поле не може бути пустим').max(50, 'Довжина поля імені не може бути більше 50 символів'),
     email: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля пошти не може бути більше 100 символів').email('Емеіл не валідний'),
     street: yup.string().trim().min(1, 'Поле не може бути пустим'),
     city: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля Місто не може бути більше 100 символів'),
-    additionalInfo: yup.string().trim().min(1, 'Поле не може бути пустим'),
+    additionalInfo: yup.string(),
 })
 
 const updateEmail = async (req: Request, res: Response) => {

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import passport from 'passport'
 import * as yup from 'yup'
 import { SendError, SendResponse } from '../../helpers'
 import { controllerWrapper, validation } from '../../middlewares'

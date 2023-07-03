@@ -8,7 +8,7 @@ import { controllerWrapper, validation } from '../../../middlewares'
 
 const schema = yup.object().shape({
     email: yup.string().email('Емеіл не валідний').required(),
-    password: yup.string().min(8).max(50).required(),
+    password: yup.string().min(6, 'Мінімальна довжина пароля 6 символів').max(50).required(),
 })
 
 const loginConfirm = async (req: Request, res: Response) => {
@@ -19,7 +19,7 @@ const loginConfirm = async (req: Request, res: Response) => {
     if (!user) return SendError.BAD_REQUEST(res, 'Користувача не знайдено', { errorId: 'user_not_registered' })
 
     const isPasswordValid = await bcrypt.compare(password.trim(), user.password as string)
-    if (!isPasswordValid) return SendError.BAD_REQUEST(res, 'Не вірний пароль', { errorId: 'validation_error' })
+    if (!isPasswordValid) return SendError.BAD_REQUEST(res, 'Невірний пароль', { errorId: 'validation_error' })
 
     const token = UserService.signToken(user)
 
