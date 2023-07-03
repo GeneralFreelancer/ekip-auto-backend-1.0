@@ -6,6 +6,7 @@ import { SendError, SendResponse } from '../../../helpers'
 import { controllerWrapper, validation } from '../../../middlewares'
 import { UserRoles } from '../../../models/UserModel'
 import { generateRandomNumbers } from '../../../utils/utils'
+import { EmailService } from '../../../services/EmailService'
 
 const schema = yup.object().shape({
     email: yup
@@ -15,7 +16,7 @@ const schema = yup.object().shape({
         .max(100, 'Email не може бути довжиною більше 100')
         .email('Внесіть валідний email')
         .required('Email обовязкове поле'),
-    password: yup.string().trim().min(8, 'Мінімальна довжина пароля 8 символів').max(50, 'Максимальна довжина пароля 50 символів').required('Пароль обовязкове поле'),
+    password: yup.string().trim().min(6, 'Мінімальна довжина пароля 6 символів').max(50, 'Максимальна довжина пароля 50 символів').required('Пароль обовязкове поле'),
 })
 
 const registerIntention = async (req: Request, res: Response) => {
@@ -29,7 +30,7 @@ const registerIntention = async (req: Request, res: Response) => {
 
     const code = generateRandomNumbers(6)
 
-    // await EmailService.sendEmailToUserWithCodeToChangeEmailInProfile(email, user.firstName ? user.firstName : 'User', code)
+    await EmailService.sendVerificationEmail(email, code)
     const user = await UserService.createUser({
         email: email.toLowerCase().trim(),
         password: hashedPassword,

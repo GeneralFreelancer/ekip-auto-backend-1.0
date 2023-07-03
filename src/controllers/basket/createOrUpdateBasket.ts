@@ -17,7 +17,7 @@ const schema = yup.object().shape({
         .required(),
 })
 
-const setExchange = async (req: Request, res: Response) => {
+const createOrUpdateBasket = async (req: Request, res: Response) => {
     const user = req.user
     if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайдено')
 
@@ -30,5 +30,5 @@ const setExchange = async (req: Request, res: Response) => {
 
 export default {
     middleware: [passport.authenticate('jwt', { session: false }), validation(schema)],
-    handler: controllerWrapper(setExchange),
+    handler: controllerWrapper(createOrUpdateBasket),
 }

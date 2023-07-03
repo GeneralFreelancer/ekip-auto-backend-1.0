@@ -17,6 +17,8 @@ const config = {
         PORT: 5502,
         IS_LOCAL: isLocal,
         APP_DOMAIN: 'http://localhost:5502',
+        CLIENT_URL: 'http://localhost:3000',
+        SG_EMAIL: 'ekip.auto.production@gmail.com',
     },
     STAGE: {
         SENTRY_ENV: 'stage',

@@ -1,16 +1,11 @@
 import { Request, Response } from 'express'
 import passport from 'passport'
-import * as yup from 'yup'
 import { User } from '../../models/UserModel'
-// import { EmailService } from '../../services/EmailService'
 import { DocumentType } from '@typegoose/typegoose'
 import { SendError, SendResponse } from '../../helpers'
-import { controllerWrapper, validation } from '../../middlewares'
+import { controllerWrapper } from '../../middlewares'
 import { generateRandomNumbers } from '../../utils/utils'
-
-const schema = yup.object().shape({
-    email: yup.string().trim().email().min(3).required(),
-})
+import { EmailService } from '../../services/EmailService'
 
 const requestVerificationEmail = async (req: Request, res: Response) => {
     const user = req.user as DocumentType<User>
@@ -18,7 +13,7 @@ const requestVerificationEmail = async (req: Request, res: Response) => {
 
     const code = generateRandomNumbers(6)
 
-    // await EmailService.sendEmailToUserWithCodeToChangeEmailInProfile(email, user.firstName ? user.firstName : 'User', code)
+    await EmailService.sendVerificationEmail(user.email, code)
     user.codeToVerifyEmail = code
     await user.save()
 
@@ -26,6 +21,6 @@ const requestVerificationEmail = async (req: Request, res: Response) => {
 }
 
 export default {
-    middleware: [passport.authenticate('jwt', { session: false }), validation(schema)],
+    middleware: [passport.authenticate('jwt', { session: false })],
     handler: controllerWrapper(requestVerificationEmail),
 }
