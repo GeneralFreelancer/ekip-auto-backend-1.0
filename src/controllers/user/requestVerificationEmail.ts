@@ -28,6 +28,6 @@ const requestVerificationEmail = async (req: Request, res: Response) => {
 }
 
 export default {
-    middleware: [passport.authenticate('jwt', { session: false }), validation(schema)],
+    middleware: [validation(schema)],
     handler: controllerWrapper(requestVerificationEmail),
 }
