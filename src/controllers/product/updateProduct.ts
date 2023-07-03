@@ -22,10 +22,11 @@ const schema = yup.object().shape({
     priceUAH: yup.number(),
     options: yup.object().shape({}),
     deliveryOptions: yup.object().shape({}),
+    pictures: yup.array().of(yup.string()),
 })
 
 const updateProduct = async (req: Request, res: Response) => {
-    const { id, stock, inTopRate, hidden, name, description, sku, category, subCategory, quantity, minQuantity, priceUSD, priceUAH, options, deliveryOptions } = req.body
+    const { id, stock, inTopRate, hidden, name, description, sku, category, subCategory, quantity, minQuantity, priceUSD, priceUAH, options, deliveryOptions, pictures } = req.body
     const product = await ProductService.updateProduct(id, {
         stock,
         inTopRate,
@@ -41,6 +42,7 @@ const updateProduct = async (req: Request, res: Response) => {
         priceUAH,
         options,
         deliveryOptions,
+        pictures,
     })
 
     if (!product) return SendError.BAD_REQUEST(res, 'Помилка оновлення')

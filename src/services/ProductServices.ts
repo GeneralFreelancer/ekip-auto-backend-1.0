@@ -5,6 +5,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { ObjectId } from 'mongodb'
 import UserService from './UserServices'
+import OrderService from './OrderService'
 
 export enum ProductFilter {
     DATE = 'date',
@@ -121,6 +122,8 @@ export class ProductService {
 
         if (filter === ProductFilter.INTEREST) return await this.findInterestProducts()
 
+        if (filter === ProductFilter.TOP) return await this.findTopProducts()
+
         let model = {}
 
         if (search) {
@@ -178,6 +181,33 @@ export class ProductService {
         const filteredProductsDB = productsDB.filter(p => p.quantity && typeof p.quantity === 'number')
         filteredProductsDB.sort((a, b) => (b.quantity as number) - (a.quantity as number))
         const promise = filteredProductsDB.map(async p => await p.getPublicInfo())
+        const products = await Promise.all(promise)
+        return products
+    }
+
+    static async findTopProducts() {
+        const orderHistory = await OrderService.getAllOrders()
+        const sortedProducts: { productId: string; number: number }[] = []
+        orderHistory.forEach(order => {
+            if (order.products?.length) {
+                order.products.forEach(product => {
+                    if (sortedProducts.some(p => p.productId === product.product)) {
+                        const index = sortedProducts.findIndex(p => p.productId === product.product)
+                        sortedProducts[index].number = sortedProducts[index].number + 1
+                    } else sortedProducts.push({ productId: product.product, number: 1 })
+                })
+            }
+        })
+        sortedProducts.sort((a, b) => b.number - a.number)
+        const sortedIds = sortedProducts.map(p => p.productId)
+        const lastSeenProductsDB = await ProductModel.find({ _id: { $in: sortedIds } })
+        const allProductsDB = await ProductModel.find()
+        const notSeenProductsDB = allProductsDB.filter(allP => {
+            if (lastSeenProductsDB.some(seenP => String(seenP._id) === String(allP._id))) return false
+            else return true
+        })
+        const productsDB = [...lastSeenProductsDB, ...notSeenProductsDB]
+        const promise = productsDB.map(async p => await p.getPublicInfo())
         const products = await Promise.all(promise)
         return products
     }

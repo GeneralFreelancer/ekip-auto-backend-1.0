@@ -4,6 +4,7 @@ import userRouter from './routes/user'
 import productRouter from './routes/product'
 import exchangeRouter from './routes/exchange'
 import basketRouter from './routes/basket'
+import orderHistory from './routes/orderHistory'
 
 const router = express.Router()
 
@@ -12,6 +13,7 @@ router.use('/user', userRouter)
 router.use('/product', productRouter)
 router.use('/exchange', exchangeRouter)
 router.use('/basket', basketRouter)
+router.use('/order-history', orderHistory)
 
 router.get('/', (_, res) => {
     res.send('Backend API')
