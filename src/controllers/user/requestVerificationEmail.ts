@@ -1,26 +1,33 @@
 import { Request, Response } from 'express'
 import passport from 'passport'
-import { User } from '../../models/UserModel'
-import { DocumentType } from '@typegoose/typegoose'
+import * as yup from 'yup'
 import { SendError, SendResponse } from '../../helpers'
-import { controllerWrapper } from '../../middlewares'
+import { controllerWrapper, validation } from '../../middlewares'
 import { generateRandomNumbers } from '../../utils/utils'
 import { EmailService } from '../../services/EmailService'
+import UserService from '../../services/UserServices'
+
+const schema = yup.object().shape({
+    email: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля пошти не може бути більше 100 символів').email('Емеіл не валідний'),
+})
 
 const requestVerificationEmail = async (req: Request, res: Response) => {
-    const user = req.user as DocumentType<User>
-    if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайдено', { errorId: 'not_authorized' })
+    const { email } = req.body
+
+    const user = await UserService.findUserByEmail(email)
+
+    if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайденоt')
 
     const code = generateRandomNumbers(6)
 
-    await EmailService.sendVerificationEmail(user.email, code)
+    await EmailService.sendVerificationEmail(email, code)
     user.codeToVerifyEmail = code
     await user.save()
 
-    return SendResponse.OK(res, 'На вашу пошту надіслано лист для підтвердження', { user: user.getPublicInfo() })
+    return SendResponse.OK(res, 'На вашу пошту надіслано лист для підтвердження', {})
 }
 
 export default {
-    middleware: [passport.authenticate('jwt', { session: false })],
+    middleware: [passport.authenticate('jwt', { session: false }), validation(schema)],
     handler: controllerWrapper(requestVerificationEmail),
 }
