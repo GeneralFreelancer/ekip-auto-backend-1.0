@@ -6,6 +6,8 @@ const router = express.Router()
 
 router.get('/', ProductController.getProducts.handler)
 
+router.get('/favorite', ProductController.getFavoriteProducts.middleware, ProductController.getFavoriteProducts.handler)
+
 router.get('/:id', ProductController.getOneProduct.handler)
 
 router.put('/', ProductController.updateProduct.middleware, ProductController.updateProduct.handler)

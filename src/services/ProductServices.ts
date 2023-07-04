@@ -211,6 +211,13 @@ export class ProductService {
         const products = await Promise.all(promise)
         return products
     }
+
+    static async getFavoriteProducts(productsId: string[]) {
+        const productsDB = await ProductModel.find({ _id: { $in: productsId } })
+        const promise = productsDB.map(async p => await p.getPublicInfo())
+        const products = await Promise.all(promise)
+        return products
+    }
 }
 
 export default ProductService

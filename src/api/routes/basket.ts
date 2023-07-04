@@ -7,4 +7,6 @@ router.post('/', BasketController.createOrUpdateBasket.middleware, BasketControl
 
 router.get('/', BasketController.getBasket.middleware, BasketController.getBasket.handler)
 
+router.put('/', BasketController.addProductInBasket.middleware, BasketController.addProductInBasket.handler)
+
 export default router

@@ -26,7 +26,7 @@ export class Basket {
         if (this.products && this.products.length) {
             const promises = this.products.map(async p => {
                 const product = await ProductService.findProductById(p.product)
-                return { product, number: p.number }
+                return { product: await product?.getPublicInfo(), number: p.number }
             })
             products = await Promise.all(promises)
         }

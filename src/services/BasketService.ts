@@ -20,6 +20,19 @@ export class BasketService {
     static async getBasketByUser(user: string | Types.ObjectId) {
         return await BasketModel.findOne({ user })
     }
+
+    static async addProductInBasket(user: string | Types.ObjectId, product: ProductInBasket) {
+        const basketDB = await this.getBasketByUser(user)
+        if (basketDB && basketDB.products) {
+            if (basketDB.products.some(p => p.product === product.product)) {
+                const index = basketDB.products.findIndex(p => p.product === product.product)
+                basketDB.products[index] = product
+            } else basketDB.products.push(product)
+            await basketDB.save()
+            return await basketDB.getPublicInfo()
+        }
+        return
+    }
 }
 
 export default BasketService

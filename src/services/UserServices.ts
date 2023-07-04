@@ -16,7 +16,7 @@ export class UserService {
         let expiresIn = 3600 * 24 * 30
         const isProvider = false
 
-        if (user.roles.find((r: UserRoles) => r === UserRoles.ADMIN)) expiresIn = 3600 * 4
+        // if (user.roles.find((r: UserRoles) => r === UserRoles.ADMIN)) expiresIn = 3600 * 4
         // if (user.roles.find((r: UserRoles) => r === UserRoles.LENDER)) isProvider = true
         if (expiration) expiresIn = expiration
 
