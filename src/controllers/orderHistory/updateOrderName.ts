@@ -12,7 +12,7 @@ const schema = yup.object().shape({
 
 const updateOrderName = async (req: Request, res: Response) => {
     const { id, name } = req.body
-    const order = await OrderService.updateOrderName(id, name)
+    const order = await OrderService.updateOrder(id, { name })
 
     if (!order) return SendError.BAD_REQUEST(res, 'Помилка оновлення')
 

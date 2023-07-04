@@ -1,16 +1,14 @@
 import { Types } from 'mongoose'
-import { DateTime } from 'luxon'
-import OrderHistoryModel, { ProductInOrder } from '../models/OrderHistoryModel'
+import OrderHistoryModel, { OrderHistory, ProductInOrder } from '../models/OrderHistoryModel'
 import { ProductInBasket } from '../models/BasketModel'
 import ProductService from './ProductServices'
 
 export class OrderService {
     static async createOrderHistory(user: string | Types.ObjectId, name: string, weight: number, products: ProductInOrder[]) {
-        return await OrderHistoryModel.create({ user, products, name, weight })
+        return await OrderHistoryModel.create({ user, products, name, weight, payed: false })
     }
 
     static async createOrder(user: string | Types.ObjectId, products: ProductInBasket[]) {
-        const now = DateTime.now().setLocale('uk')
         let totalWeight = 0
         let totalPrice = 0
         const productsInOrder: ProductInOrder[] = []
@@ -29,7 +27,8 @@ export class OrderService {
                 productsInOrder.push({ ...product, weight: isNaN(weight) ? 0 : weight })
             }
         }
-        const name = `Замовлення: дата ${now.day} ${now.monthLong}, сума ${totalPrice}$`
+        const date = new Intl.DateTimeFormat('UKR', { year: 'numeric', month: 'long', day: '2-digit' }).format(new Date()).slice(0, -3)
+        const name = `Замовлення від ${date} на ${totalPrice}$`
 
         const order = await this.createOrderHistory(user, name, totalWeight, productsInOrder)
 
@@ -47,8 +46,8 @@ export class OrderService {
         return await OrderHistoryModel.find()
     }
 
-    static async updateOrderName(orderId: string | Types.ObjectId, name: string) {
-        return await OrderHistoryModel.findByIdAndUpdate(orderId, { name }, { new: true })
+    static async updateOrder(orderId: string | Types.ObjectId, fields: Partial<OrderHistory>) {
+        return await OrderHistoryModel.findByIdAndUpdate(orderId, fields, { new: true })
     }
 }
 

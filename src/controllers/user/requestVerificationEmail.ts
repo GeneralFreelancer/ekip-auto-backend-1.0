@@ -7,7 +7,7 @@ import { EmailService } from '../../services/EmailService'
 import UserService from '../../services/UserServices'
 
 const schema = yup.object().shape({
-    email: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля пошти не може бути більше 100 символів').email('Емеіл не валідний'),
+    email: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля пошти не може бути більше 100 символів').email('Емеіл не валідний').required(),
 })
 
 const requestVerificationEmail = async (req: Request, res: Response) => {

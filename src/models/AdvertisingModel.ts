@@ -1,4 +1,5 @@
 import { prop, getModelForClass, DocumentType } from '@typegoose/typegoose'
+import config from '../config'
 
 export class AdvertisingObj {
     @prop({ type: String, required: false }) public image?: string
@@ -21,11 +22,14 @@ export class Advertising {
     @prop({ type: Date, required: false })
     public updatedAt?: Date
 
-    async getPublicInfo(this: DocumentType<Advertising>) {
+    getPublicInfo(this: DocumentType<Advertising>) {
+        const desktop = this.desktop?.map(d => ({ Image: config.API_URL + 'images/' + d.image, url: d.url }))
+        const tablet = this.tablet?.map(d => ({ Image: config.API_URL + 'images/' + d.image, url: d.url }))
+        const mobile = this.mobile?.map(d => ({ Image: config.API_URL + 'images/' + d.image, url: d.url }))
         return {
-            desktop: this.desktop,
-            tablet: this.desktop,
-            mobile: this.desktop,
+            desktop,
+            tablet,
+            mobile,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         }
