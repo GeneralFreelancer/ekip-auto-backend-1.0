@@ -12,7 +12,9 @@ router.get('/:id', ProductController.getOneProduct.handler)
 
 router.put('/', ProductController.updateProduct.middleware, ProductController.updateProduct.handler)
 
-router.post('/', ProductController.addProducts.middleware, ProductController.addProducts.handler)
+router.post('/add', ProductController.addProducts.middleware, ProductController.addProducts.handler)
+
+router.post('/update', ProductController.updateProducts.middleware, ProductController.updateProducts.handler)
 
 router.post('/image', filesMiddleware.single('image'), ProductController.addImage.middleware, ProductController.addImage.handler)
 

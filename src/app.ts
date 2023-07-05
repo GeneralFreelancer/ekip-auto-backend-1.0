@@ -34,27 +34,28 @@ app.use(
 )
 app.use(helmet())
 
-const origin =
-    process.env.ENV === 'DEV'
-        ? [
-              'http://localhost:3000',
-              'http://localhost:3500',
-              'http://localhost:8080',
-              'http://localhost:4242',
-              'http://localhost:5050',
-              'http://localhost:8090',
-              /app\.dev\.lever\.com\.au$/,
-              /.*/,
-          ]
-        : ['http://localhost:3000', /app\.lever\.com\.au$/, /.*/]
+// const origin =
+//     process.env.ENV === 'DEV'
+//         ? [
+//               'http://localhost:3000',
+//               'http://localhost:3500',
+//               'http://localhost:8080',
+//               'http://localhost:4242',
+//               'http://localhost:5050',
+//               'http://localhost:8090',
+//               /app\.dev\.lever\.com\.au$/,
+//               /.*/,
+//           ]
+//         : ['http://localhost:3000', /app\.lever\.com\.au$/, /.*/]
 
-if (process.env.ENV === 'STAGE') origin.push('/app.stage.lever.com.au$/')
+// if (process.env.ENV === 'STAGE') origin.push('/app.stage.lever.com.au$/')
 
-app.use(
-    cors({
-        origin: origin,
-    }),
-)
+// app.use(
+//     cors({
+//         origin: origin,
+//     }),
+// )
+app.use(cors())
 
 // app.use(express.urlencoded({ extended: true }));
 app.use((req: Request, res: Response, next: NextFunction): void => {
@@ -89,6 +90,7 @@ passport.use(new AnonymousStrategy())
 // Routes
 app.use(apiRoutes)
 app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/excel', express.static(path.join(__dirname, 'excel')))
 app.set('view engine', 'ejs')
 
 // Unmatched routes

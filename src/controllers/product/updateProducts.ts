@@ -23,17 +23,17 @@ const schema = yup.object().shape({
     ),
 })
 
-const addProducts = async (req: Request, res: Response) => {
+const updateProducts = async (req: Request, res: Response) => {
     const { products } = req.body
 
     if (!products || !products.length) return SendError.BAD_REQUEST(res, 'Помилка додавання')
 
-    await ProductService.createProducts(products)
+    await ProductService.updateProducts(products)
 
     return SendResponse.OK(res, 'Продукти додано', {})
 }
 
 export default {
     middleware: [validation(schema)],
-    handler: controllerWrapper(addProducts),
+    handler: controllerWrapper(updateProducts),
 }

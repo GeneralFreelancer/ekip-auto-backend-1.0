@@ -6,6 +6,7 @@ import getOneProduct from './getOneProduct'
 import delProduct from './delProduct'
 import updateProduct from './updateProduct'
 import getFavoriteProducts from './getFavoriteProducts'
+import updateProducts from './updateProducts'
 
 export default {
     addProducts,
@@ -16,4 +17,5 @@ export default {
     delProduct,
     updateProduct,
     getFavoriteProducts,
+    updateProducts,
 }
