@@ -1,6 +1,5 @@
-import bodyParser from 'body-parser'
 import cors from 'cors'
-import express, { Response, Request, NextFunction, ErrorRequestHandler } from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 import mongoose, { ConnectOptions } from 'mongoose'

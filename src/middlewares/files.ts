@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import multer from 'multer'
 import path from 'path'
+import { generateRandomNumbers } from '../utils/utils'
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
         cb(null, path.join(__dirname, '..', 'images'))
     },
     filename(req, file, cb) {
-        cb(null, new Date().toISOString() + '_' + file.originalname)
+        cb(null, generateRandomNumbers(6) + '_' + file.originalname)
     },
 })
 

@@ -35,7 +35,7 @@ export class OrderHistory {
         if (this.products && this.products.length) {
             const promises = this.products.map(async p => {
                 const product = await ProductService.findProductById(p.product)
-                return { product, number: p.number, weight: p.weight }
+                return { product: await product?.getPublicInfo(), number: p.number, weight: p.weight }
             })
             products = await Promise.all(promises)
         }

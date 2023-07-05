@@ -9,4 +9,6 @@ router.get('/', BasketController.getBasket.middleware, BasketController.getBaske
 
 router.put('/', BasketController.addProductInBasket.middleware, BasketController.addProductInBasket.handler)
 
+router.get('/xlsx', BasketController.createXlsx.middleware, BasketController.createXlsx.handler)
+
 export default router
