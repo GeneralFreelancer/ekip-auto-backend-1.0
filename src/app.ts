@@ -97,6 +97,8 @@ app.set('view engine', 'ejs')
 app.all('*', (req, res) => SendError.NOT_FOUND(res, 'Ohh you are lost, read the API documentation to find your way back home :)'))
 
 const errorHandler: ErrorRequestHandler = (err, req, res, _next): void => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     const { status = 500, message = 'Sever error' } = err
     res.status(status).json({ code: status, success: false, message })
 }
