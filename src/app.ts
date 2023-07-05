@@ -56,17 +56,17 @@ app.use(helmet())
 //     }),
 // )
 app.use(cors())
-
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
 // app.use(express.urlencoded({ extended: true }));
-app.use((req: Request, res: Response, next: NextFunction): void => {
-    if (req.originalUrl === '/stripe/stripe-wh') {
-        next()
-    } else if (req.originalUrl === '/stripe/stripe-wh-one-time-payment') {
-        next()
-    } else {
-        bodyParser.json()(req, res, next)
-    }
-})
+// app.use((req: Request, res: Response, next: NextFunction): void => {
+//     if (req.originalUrl === '/stripe/stripe-wh') {
+//         next()
+//     } else if (req.originalUrl === '/stripe/stripe-wh-one-time-payment') {
+//         next()
+//     } else {
+//         bodyParser.json()(req, res, next)
+//     }
+// })
 
 // Connect to Mongo DB
 mongoose.set('strictQuery', false)
@@ -95,20 +95,6 @@ app.set('view engine', 'ejs')
 
 // Unmatched routes
 app.all('*', (req, res) => SendError.NOT_FOUND(res, 'Ohh you are lost, read the API documentation to find your way back home :)'))
-
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    next()
-})
-
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*') // Замените на свой домен
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-//     next()
-// })
 
 const errorHandler: ErrorRequestHandler = (err, req, res, _next): void => {
     const { status = 500, message = 'Sever error' } = err
