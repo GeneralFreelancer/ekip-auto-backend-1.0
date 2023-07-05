@@ -96,9 +96,13 @@ app.set('view engine', 'ejs')
 // Unmatched routes
 app.all('*', (req, res) => SendError.NOT_FOUND(res, 'Ohh you are lost, read the API documentation to find your way back home :)'))
 
-const errorHandler: ErrorRequestHandler = (err, req, res, _next): void => {
+app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
+})
+
+const errorHandler: ErrorRequestHandler = (err, req, res, _next): void => {
     const { status = 500, message = 'Sever error' } = err
     res.status(status).json({ code: status, success: false, message })
 }
