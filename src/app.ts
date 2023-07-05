@@ -55,7 +55,7 @@ app.use(helmet())
 //     }),
 // )
 app.use(cors())
-app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
+// app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
 // app.use(express.urlencoded({ extended: true }));
 // app.use((req: Request, res: Response, next: NextFunction): void => {
 //     if (req.originalUrl === '/stripe/stripe-wh') {
