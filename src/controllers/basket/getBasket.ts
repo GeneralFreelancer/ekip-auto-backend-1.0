@@ -13,7 +13,7 @@ const getBasket = async (req: Request, res: Response) => {
 
     if (!basket) basket = await BasketService.createBasket(user._id, [])
 
-    return SendResponse.OK(res, 'Кошик', { basket })
+    return SendResponse.OK(res, 'Кошик', { basket: await basket.getPublicInfo() })
 }
 
 export default {
