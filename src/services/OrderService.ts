@@ -17,8 +17,13 @@ export class OrderService {
             const productDB = await ProductService.findProductById(product.product)
             if (productDB) {
                 let weight = 0
-                if (productDB.deliveryOptions && Object.keys(productDB.deliveryOptions).includes('weight')) weight = Number(productDB.deliveryOptions.weight)
-                else if (productDB.options && Object.keys(productDB.options).includes('weight')) weight = Number(productDB.options.weight)
+                if (productDB.deliveryOptions && productDB.deliveryOptions.length && productDB.deliveryOptions.some(o => o.name === 'weight')) {
+                    const index = productDB.deliveryOptions.findIndex(o => o.name === 'weight')
+                    weight = Number(productDB.deliveryOptions[index].value)
+                } else if (productDB.options && productDB.options.length && productDB.options.some(o => o.name === 'weight')) {
+                    const index = productDB.options.findIndex(o => o.name === 'weight')
+                    weight = Number(productDB.options[index].value)
+                }
                 if (!isNaN(weight)) {
                     weight = weight * product.number
                     totalWeight += weight

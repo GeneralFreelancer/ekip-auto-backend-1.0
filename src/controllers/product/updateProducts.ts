@@ -17,8 +17,8 @@ const schema = yup.object().shape({
             minQuantity: yup.number(),
             priceUSD: yup.number(),
             priceUAH: yup.number(),
-            options: yup.object().shape({}),
-            deliveryOptions: yup.object().shape({}),
+            options: yup.array().of(yup.object().shape({})),
+            deliveryOptions: yup.array().of(yup.object().shape({})),
         }),
     ),
 })

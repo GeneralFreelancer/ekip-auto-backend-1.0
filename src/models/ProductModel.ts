@@ -2,7 +2,10 @@ import { prop, getModelForClass, DocumentType, Severity } from '@typegoose/typeg
 import config from '../config'
 import ExchangeModel from './ExchangeModel'
 
-type Options = Record<string, string>
+type Option = {
+    name: string
+    value: string
+}
 
 export class Product {
     @prop({ default: false, required: false, type: Boolean })
@@ -41,11 +44,11 @@ export class Product {
     @prop({ type: Number, required: true })
     public priceUAH?: number
 
-    @prop({ type: Object, required: false, _id: false, allowMixed: Severity.ALLOW })
-    public options?: Options
+    @prop({ type: Array, required: false, _id: false, allowMixed: Severity.ALLOW })
+    public options?: Option[]
 
-    @prop({ type: Object, required: false, _id: false, allowMixed: Severity.ALLOW })
-    public deliveryOptions?: Options
+    @prop({ type: Array, required: false, _id: false, allowMixed: Severity.ALLOW })
+    public deliveryOptions?: Option[]
 
     @prop({ type: Array, required: false, allowMixed: Severity.ALLOW })
     public pictures?: string[]
