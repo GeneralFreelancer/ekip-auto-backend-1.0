@@ -57,6 +57,12 @@ app.use(helmet())
 // )
 app.use(cors())
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
+})
 app.use(bodyParser.json({ limit: '50mb' }))
 // app.use(express.urlencoded({ extended: true }));
 // app.use((req: Request, res: Response, next: NextFunction): void => {

@@ -77,7 +77,7 @@ export class EmailService {
 
             const msgAdmin = {
                 ...msg,
-                text: `Користувач ${firstName} ${lastName} зробив здійснив покупку`,
+                text: `Користувач ${firstName} ${lastName} здійснив замовлення`,
             }
 
             await sgMail.send(msgUser)
