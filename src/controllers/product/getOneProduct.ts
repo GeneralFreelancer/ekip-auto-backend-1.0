@@ -9,7 +9,7 @@ const getProducts = async (req: Request, res: Response) => {
 
     if (!product) return SendError.BAD_REQUEST(res, 'Товар не знайдено')
 
-    return SendResponse.OK(res, 'Товари', { product })
+    return SendResponse.OK(res, 'Товари', { product: await product.getPublicInfo() })
 }
 
 export default {
