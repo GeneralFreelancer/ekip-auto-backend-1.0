@@ -7,8 +7,8 @@ router.post('/', OrderHistoryController.createOrder.middleware, OrderHistoryCont
 
 router.get('/', OrderHistoryController.getOrderHistory.middleware, OrderHistoryController.getOrderHistory.handler)
 
-router.patch('/name', OrderHistoryController.updateOrderName.middleware, OrderHistoryController.updateOrderName.handler)
+router.put('/name', OrderHistoryController.updateOrderName.middleware, OrderHistoryController.updateOrderName.handler)
 
-router.patch('/payed', OrderHistoryController.updatePayedStatus.middleware, OrderHistoryController.updatePayedStatus.handler)
+router.put('/payed', OrderHistoryController.updatePayedStatus.middleware, OrderHistoryController.updatePayedStatus.handler)
 
 export default router

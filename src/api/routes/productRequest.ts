@@ -7,6 +7,6 @@ router.post('/', ProductRequestController.createProductRequest.middleware, Produ
 
 router.get('/', ProductRequestController.getProductRequests.middleware, ProductRequestController.getProductRequests.handler)
 
-router.patch('/', ProductRequestController.updateStatus.middleware, ProductRequestController.updateStatus.handler)
+router.put('/', ProductRequestController.updateStatus.middleware, ProductRequestController.updateStatus.handler)
 
 export default router
