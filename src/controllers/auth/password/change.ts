@@ -6,7 +6,7 @@ import { SendError, SendResponse } from '../../../helpers'
 import { controllerWrapper, validation } from '../../../middlewares'
 
 const schema = yup.object().shape({
-    password: yup.string().min(8).max(50).required(),
+    password: yup.string().min(6).max(50).required(),
 })
 
 const changePassword = async (req: Request, res: Response) => {
