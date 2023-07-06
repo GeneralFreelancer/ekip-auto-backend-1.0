@@ -11,6 +11,7 @@ import JWTAuthStrategy from './utils/passport'
 import config from './config'
 import { SendError } from './helpers'
 import path from 'path'
+import bodyParser from 'body-parser'
 
 const app = express()
 
@@ -56,6 +57,7 @@ app.use(helmet())
 // )
 app.use(cors())
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
+app.use(bodyParser.json({ limit: '50mb' }))
 // app.use(express.urlencoded({ extended: true }));
 // app.use((req: Request, res: Response, next: NextFunction): void => {
 //     if (req.originalUrl === '/stripe/stripe-wh') {
