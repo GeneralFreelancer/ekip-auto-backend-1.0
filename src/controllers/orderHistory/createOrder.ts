@@ -30,11 +30,13 @@ const createOrder = async (req: Request, res: Response) => {
 
     if (!order.products || !order.products.length) return SendError.BAD_REQUEST(res, 'сталася помилка')
 
-    await XlsxService.createOrderXlsx(order.products)
+    await XlsxService.createOrderXlsx(order.products, String(user._id))
 
-    await EmailService.sendOrderEmail(user.email, user.firstName as string, user.lastName as string)
+    await EmailService.sendOrderEmail(user.email, user.firstName as string, user.lastName as string, String(user._id))
 
     await BasketService.createOrUpdateBasket(user._id, [])
+
+    await XlsxService.removeXlsx(String(user._id))
 
     return SendResponse.OK(res, 'Замовлення створено', { order })
 }

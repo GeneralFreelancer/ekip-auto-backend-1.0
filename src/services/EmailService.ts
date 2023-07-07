@@ -48,9 +48,9 @@ export class EmailService {
         }
     }
 
-    static async sendOrderEmail(userEmail: string, firstName: string, lastName: string) {
+    static async sendOrderEmail(userEmail: string, firstName: string, lastName: string, userId: string) {
         try {
-            const filePath = path.join(__dirname, '..', 'excel') + '/order.xlsx'
+            const filePath = path.join(__dirname, '..', 'excel') + `/order${userId}.xlsx`
             const attachment = fs.readFileSync(filePath).toString('base64')
             const msg = {
                 to: userEmail, // Change to your recipient
@@ -85,7 +85,7 @@ export class EmailService {
             return true
         } catch (error) {
             const errorMessage = getErrorMessage(error)
-            consoleError('EmailService.sendVerificationEmail', errorMessage, { userEmail })
+            consoleError('EmailService.sendOrderEmail', errorMessage, { userEmail })
             return errorMessage
         }
     }
