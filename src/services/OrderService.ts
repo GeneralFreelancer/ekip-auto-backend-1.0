@@ -47,6 +47,12 @@ export class OrderService {
         return orders
     }
 
+    static async getOrderById(orderId: string | Types.ObjectId) {
+        const order = await OrderHistoryModel.findById(orderId)
+        if (!order) return
+        return await order.getPublicInfo()
+    }
+
     static async getAllOrders() {
         return await OrderHistoryModel.find()
     }

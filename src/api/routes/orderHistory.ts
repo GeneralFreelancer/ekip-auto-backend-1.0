@@ -7,6 +7,8 @@ router.post('/', OrderHistoryController.createOrder.middleware, OrderHistoryCont
 
 router.get('/', OrderHistoryController.getOrderHistory.middleware, OrderHistoryController.getOrderHistory.handler)
 
+router.get('/:id', OrderHistoryController.getOrder.middleware, OrderHistoryController.getOrder.handler)
+
 router.put('/name', OrderHistoryController.updateOrderName.middleware, OrderHistoryController.updateOrderName.handler)
 
 router.put('/payed', OrderHistoryController.updatePayedStatus.middleware, OrderHistoryController.updatePayedStatus.handler)

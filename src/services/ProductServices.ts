@@ -137,9 +137,8 @@ export class ProductService {
             const regex = new RegExp(search, 'i')
             model = { name: regex }
         } else if (subcategory) {
-            model = { subcategory }
+            model = { subCategory: subcategory }
         } else if (category) model = { category }
-
         const productsDB = limit ? await ProductModel.find(model).limit(limit) : await ProductModel.find(model)
         const promise = productsDB.map(async p => await p.getPublicInfo())
         const products = await Promise.all(promise)

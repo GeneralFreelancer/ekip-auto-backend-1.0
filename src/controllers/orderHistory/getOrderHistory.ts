@@ -10,7 +10,7 @@ const getOrderHistory = async (req: Request, res: Response) => {
 
     const orderHistory = await OrderService.getOrderHistory(user._id)
 
-    return SendResponse.OK(res, 'Шсторія замовлень', { orderHistory })
+    return SendResponse.OK(res, 'Історія замовлень', { orderHistory })
 }
 
 export default {
