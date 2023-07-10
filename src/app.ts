@@ -16,16 +16,16 @@ import bodyParser from 'body-parser'
 const app = express()
 
 //Rate Limiter
-app.set('trust proxy', 2)
-app.get('/ip', (request, response) => response.send(request.ip))
+// app.set('trust proxy', 2)
+// app.get('/ip', (request, response) => response.send(request.ip))
 // const apiLimiter = rateLimit({
 //     windowMs: 15 * 60 * 1000, // 15 minutes
 //     max: 500, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 // })
 // app.use('/', apiLimiter)
 
-app.use(express.json({ limit: '1mb' }))
-app.use(express.urlencoded({ limit: '1mb', extended: true }))
+// app.use(express.json({ limit: '1mb' }))
+// app.use(express.urlencoded({ limit: '1mb', extended: true }))
 
 app.use(
     morgan(function (tokens, req, res) {
