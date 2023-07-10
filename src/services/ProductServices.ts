@@ -131,12 +131,11 @@ export class ProductService {
 
         if (filter === ProductFilter.TOP) return await this.findTopProducts()
 
+        if (search && search.length) return await this.searchProducts(search, limit)
+
         let model = {}
 
-        if (search) {
-            const regex = new RegExp(search, 'i')
-            model = { name: regex }
-        } else if (subcategory) {
+        if (subcategory) {
             model = { subCategory: subcategory }
         } else if (category) model = { category }
         const productsDB = limit ? await ProductModel.find(model).limit(limit) : await ProductModel.find(model)
@@ -220,6 +219,20 @@ export class ProductService {
 
     static async getFavoriteProducts(productsId: string[]) {
         const productsDB = await ProductModel.find({ _id: { $in: productsId } })
+        const promise = productsDB.map(async p => await p.getPublicInfo())
+        const products = await Promise.all(promise)
+        return products
+    }
+
+    static async searchProducts(search: string, limit?: number) {
+        const regex = new RegExp(search, 'i')
+        const productsDB = limit
+            ? await ProductModel.find({
+                  $or: [{ name: regex }, { sku: regex }],
+              }).limit(limit)
+            : await ProductModel.find({
+                  $or: [{ name: regex }, { sku: regex }],
+              })
         const promise = productsDB.map(async p => await p.getPublicInfo())
         const products = await Promise.all(promise)
         return products
