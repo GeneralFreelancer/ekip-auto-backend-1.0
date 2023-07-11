@@ -28,7 +28,7 @@ export class OrderService {
                     weight = weight * product.number
                     totalWeight += weight
                 }
-                if (productDB?.priceUSD && !isNaN(productDB.priceUSD)) totalPrice += productDB.priceUSD
+                if (productDB?.priceUSD && !isNaN(productDB.priceUSD)) totalPrice += productDB.priceUSD * product.number
                 productsInOrder.push({ ...product, weight: isNaN(weight) ? 0 : weight })
             }
         }
