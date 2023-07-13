@@ -59,6 +59,7 @@ export class ProductService {
     }
 
     static async updateProduct(id: Types.ObjectId | string, fields: Partial<Product>) {
+        if (fields.pictures) return await ProductModel.findByIdAndUpdate(id, { ...fields, pictures: [...fields.pictures] }, { new: true })
         return await ProductModel.findByIdAndUpdate(id, { ...fields }, { new: true })
     }
 
