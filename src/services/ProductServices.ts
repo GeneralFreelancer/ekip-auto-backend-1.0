@@ -96,7 +96,14 @@ export class ProductService {
         if (!product) return null
         if (product.pictures?.length)
             product.pictures.forEach(async p => {
-                await this.delImage(product, p)
+                // await this.delImage(product, p)
+                const filePath = path.join(__dirname, '..', 'images')
+                fs.unlink(path.join(filePath, p), err => {
+                    if (err) {
+                        // eslint-disable-next-line no-console
+                        console.log(`Error: ${err}`)
+                    }
+                })
             })
 
         return product

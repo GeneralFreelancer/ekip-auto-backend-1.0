@@ -29,6 +29,16 @@ export class UserService {
         return token
     }
 
+    static async findUserByToken(token: string) {
+        let user = null
+        const arrToken = token.split(' ')
+        if (!arrToken.length) return user
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const payload: any = jwt.verify(arrToken[1], 'Super djvjdvU%hx%^78 puersd jsdkfjsdlkfj3242348sdfsdf secrete')
+        if (payload.id) user = await UserModel.findById(payload.id)
+        return user
+    }
+
     static async setHashedPasswordToUserModel(password: string) {
         return await bcrypt.hash(password.trim(), 10)
     }
