@@ -13,6 +13,10 @@ export class ProductRequestService {
     static async updateStatus(productRequestsId: string | Types.ObjectId, status: boolean) {
         return await ProductRequestModel.findByIdAndUpdate(productRequestsId, { status }, { new: true })
     }
+
+    static async deleteProductRequest(productRequestsId: string | Types.ObjectId) {
+        return await ProductRequestModel.findByIdAndDelete(productRequestsId)
+    }
 }
 
 export default ProductRequestService
