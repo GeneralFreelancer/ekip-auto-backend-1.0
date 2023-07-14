@@ -9,4 +9,6 @@ router.get('/', ProductRequestController.getProductRequests.middleware, ProductR
 
 router.put('/', ProductRequestController.updateStatus.middleware, ProductRequestController.updateStatus.handler)
 
+router.delete('/:id', ProductRequestController.deleteProductRequest.middleware, ProductRequestController.deleteProductRequest.handler)
+
 export default router
