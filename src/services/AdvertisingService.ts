@@ -37,7 +37,7 @@ export class AdvertisingService {
     }
 
     static async updateAdvertising(id: string | Types.ObjectId, fields: Partial<Advertising>) {
-        return await AdvertisingModel.findByIdAndUpdate(id, fields)
+        return await AdvertisingModel.findByIdAndUpdate(id, fields, { new: true })
     }
 
     static async delImage(imageName: string) {
