@@ -31,7 +31,7 @@ export class EmailService {
     static async sendRequestOrderEmail(userEmail: string, firstName: string, lastName: string, productName: string, sku: string) {
         try {
             const msg = {
-                to: userEmail, // Change to your recipient
+                to: 'ekip.auto.production@gmail.com', // Change to your recipient
                 from: {
                     name: 'Ekip-auto',
                     email: 'ekip.auto.production@gmail.com',
@@ -77,6 +77,7 @@ export class EmailService {
 
             const msgAdmin = {
                 ...msg,
+                to: 'ekip.auto.production@gmail.com',
                 text: `Користувач ${firstName} ${lastName} здійснив замовлення`,
             }
 
