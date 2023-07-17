@@ -11,7 +11,9 @@ const deleteProductRequest = async (req: Request, res: Response) => {
 
     if (!productRequest) return SendError.BAD_REQUEST(res, 'Запит не знайдено')
 
-    return SendResponse.OK(res, 'Запит видалено', { productRequest })
+    const productRequests = await ProductRequestService.getProductRequests()
+
+    return SendResponse.OK(res, 'Запити', { productRequests })
 }
 
 export default {
