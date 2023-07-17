@@ -1,6 +1,7 @@
 import { Types } from 'mongoose'
 import ProductRequestModel from '../models/ProductRequestModel'
 import ProductService from './ProductServices'
+import UserService from './UserServices'
 
 export class ProductRequestService {
     static async createProductRequest(user: string | Types.ObjectId, product: string) {
@@ -8,14 +9,15 @@ export class ProductRequestService {
     }
 
     static async getProductRequests() {
-        const productRequests = await ProductRequestModel.find().populate('user')
+        const productRequests = await ProductRequestModel.find()
         const promises = productRequests.map(async pr => {
             const product = await ProductService.findProductById(String(pr.product))
+            const user = await UserService.findUserById(String(pr.user))
             if (product) {
                 const productInfo = await product.getPublicInfo()
-                return { ...pr, product: productInfo }
+                return { createdAt: pr.createdAt, updatedAt: pr.updatedAt, status: pr.status, _id: pr._id, product: productInfo, user: user?.getPublicInfo() }
             }
-            return pr
+            return { createdAt: pr.createdAt, updatedAt: pr.updatedAt, status: pr.status, _id: pr._id, user: user?.getPublicInfo() }
         })
 
         return await Promise.all(promises)
