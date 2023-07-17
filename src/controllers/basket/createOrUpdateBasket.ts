@@ -17,6 +17,7 @@ const schema = yup.object().shape({
         .required(),
 })
 
+console.log(schema);
 const createOrUpdateBasket = async (req: Request, res: Response) => {
     const user = req.user
     if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайдено')
