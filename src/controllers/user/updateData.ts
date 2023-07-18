@@ -11,9 +11,11 @@ const schema = yup.object().shape({
     secondName: yup.string(),
     lastName: yup.string().trim().min(2, 'Поле не може бути пустим').max(50, 'Довжина поля імені не може бути більше 50 символів'),
     email: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля пошти не може бути більше 100 символів').email('Емеіл не валідний'),
-    street: yup.string().trim().min(1, 'Поле не може бути пустим'),
-    city: yup.string().trim().min(1, 'Поле не може бути пустим').max(100, 'Довжина поля Місто не може бути більше 100 символів'),
-    additionalInfo: yup.string(),
+    livingAddress: yup.object().shape({
+        street: yup.string(),
+        city: yup.string(),
+        additionalInfo: yup.string(),
+    }),
 })
 
 const updateEmail = async (req: Request, res: Response) => {
@@ -21,11 +23,7 @@ const updateEmail = async (req: Request, res: Response) => {
     if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайденоt')
     if (!user.isEmailConfirmed) return SendError.UNAUTHORIZED(res, 'Вам потрібно підтвердити email')
 
-    const { phone, firstName, secondName, lastName, email, street, city, additionalInfo } = req.body
-
-    let livingAddress = null
-
-    if (street && city) livingAddress = { street, city, additionalInfo }
+    const { phone, firstName, secondName, lastName, email, livingAddress } = req.body
 
     if (phone && phone.trim() !== user.phone) {
         const registeredUserByPhone = await UserService.findUserByPhone(phone)
