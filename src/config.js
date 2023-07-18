@@ -9,8 +9,7 @@ if (process.argv.some(a => a === 'prod')) envFilePath = '.env.production'
 if (process.argv.some(a => a === 'stage')) envFilePath = '.env.stage'
 if (process.argv.some(a => a === 'local')) isLocal = true
 
-dotenv.config({ path: envFilePath })
-
+envFilePath.length ? dotenv.config({ path: envFilePath }) : dotenv.config()
 const config = {
     DEV: {
         SENTRY_ENV: 'development',
@@ -25,16 +24,20 @@ const config = {
         PORT: 5003,
         IS_LOCAL: isLocal,
         APP_DOMAIN: 'http://localhost:5502',
+        CLIENT_URL: 'http://localhost:3000',
+        SG_EMAIL: 'ekip.auto.production@gmail.com',
     },
     PROD: {
         SENTRY_ENV: 'production',
         PORT: 5002,
         IS_LOCAL: isLocal,
         APP_DOMAIN: 'http://localhost:5502',
+        CLIENT_URL: 'http://localhost:3000',
+        SG_EMAIL: 'ekip.auto.production@gmail.com',
     },
 }
 
-const secretesNamesList = ['DB', 'SENDGRID_API_KEY', 'SENDGRID_WEB_HOOK', 'API_URL']
+const secretesNamesList = ['DB', 'SENDGRID_API_KEY', 'API_URL']
 
 const secretes = {}
 secretesNamesList.forEach(s => (secretes[s] = process.env[s]))
