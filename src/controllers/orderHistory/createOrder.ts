@@ -32,7 +32,7 @@ const createOrder = async (req: Request, res: Response) => {
 
     await XlsxService.createOrderXlsx(order.products, String(user._id))
 
-    await EmailService.sendOrderEmail(user.email, user.firstName as string, user.lastName as string, String(user._id))
+    await EmailService.sendOrderEmail(user.email, user.firstName as string, user.lastName as string, user.phone, user.livingAddress, String(user._id))
 
     await BasketService.createOrUpdateBasket(user._id, [])
 

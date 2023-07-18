@@ -48,7 +48,14 @@ export class EmailService {
         }
     }
 
-    static async sendOrderEmail(userEmail: string, firstName: string, lastName: string, userId: string) {
+    static async sendOrderEmail(
+        userEmail: string,
+        firstName: string,
+        lastName: string,
+        phone?: string,
+        livingAddress?: { city?: string; street?: string; additionalInfo?: string },
+        userId?: string,
+    ) {
         try {
             const filePath = path.join(__dirname, '..', 'excel') + `/order${userId}.xlsx`
             const attachment = fs.readFileSync(filePath).toString('base64')
@@ -78,7 +85,7 @@ export class EmailService {
             const msgAdmin = {
                 ...msg,
                 to: 'ekip.auto.production@gmail.com',
-                text: `Користувач ${firstName} ${lastName} здійснив замовлення`,
+                html: `Користувач <strong>${firstName} ${lastName}</strong> здійснив замовлення.<br> Дані користувача:<br> Місто: ${livingAddress?.city} <br> Адреса: ${livingAddress?.street}<br> Телефон: ${phone}<br> Додаткова інформація: ${livingAddress?.additionalInfo}`,
             }
 
             await sgMail.send(msgUser)
