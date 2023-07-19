@@ -8,8 +8,8 @@ export enum UserRoles {
 }
 
 export class LivingAddress {
-    @prop({ type: String, required: true }) public street!: string
-    @prop({ type: String, required: false }) public city!: string
+    @prop({ type: String, required: false }) public street?: string
+    @prop({ type: String, required: false }) public city?: string
     @prop({ type: String, required: false }) public additionalInfo?: string
 }
 
