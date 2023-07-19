@@ -18,21 +18,22 @@ const schema = yup.object().shape({
             }),
         )
         .required(),
+    comment: yup.string(),
 })
 
 const createOrder = async (req: Request, res: Response) => {
     const user = req.user
     if (!user) return SendError.UNAUTHORIZED(res, 'Користувача не знайдено')
 
-    const { products } = req.body
+    const { products, comment } = req.body
 
-    const order = await OrderService.createOrder(user._id, products)
+    const order = await OrderService.createOrder(user._id, products, comment)
 
     if (!order.products || !order.products.length) return SendError.BAD_REQUEST(res, 'сталася помилка')
 
     await XlsxService.createOrderXlsx(order.products, String(user._id))
 
-    await EmailService.sendOrderEmail(user.email, user.firstName as string, user.lastName as string, user.phone, user.livingAddress, String(user._id))
+    await EmailService.sendOrderEmail(user.email, user.firstName as string, user.lastName as string, user.phone, user.livingAddress, comment, String(user._id))
 
     await BasketService.createOrUpdateBasket(user._id, [])
 

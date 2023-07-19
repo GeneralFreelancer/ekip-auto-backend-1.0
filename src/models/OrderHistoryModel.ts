@@ -24,6 +24,9 @@ export class OrderHistory {
     @prop({ required: true, type: Boolean })
     public payed!: boolean
 
+    @prop({ required: false, type: String })
+    public comment?: string
+
     @prop({ type: Date, required: false })
     public createdAt?: Date
 
@@ -45,6 +48,7 @@ export class OrderHistory {
             products,
             name: this.name,
             weight: this.weight,
+            comment: this.comment,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         }

@@ -4,11 +4,11 @@ import { ProductInBasket } from '../models/BasketModel'
 import ProductService from './ProductServices'
 
 export class OrderService {
-    static async createOrderHistory(user: string | Types.ObjectId, name: string, weight: number, products: ProductInOrder[]) {
-        return await OrderHistoryModel.create({ user, products, name, weight, payed: false })
+    static async createOrderHistory(user: string | Types.ObjectId, name: string, weight: number, products: ProductInOrder[], comment?: string) {
+        return await OrderHistoryModel.create({ user, products, name, weight, payed: false, comment })
     }
 
-    static async createOrder(user: string | Types.ObjectId, products: ProductInBasket[]) {
+    static async createOrder(user: string | Types.ObjectId, products: ProductInBasket[], comment?: string) {
         let totalWeight = 0
         let totalPrice = 0
         const productsInOrder: ProductInOrder[] = []
@@ -35,7 +35,7 @@ export class OrderService {
         const date = new Intl.DateTimeFormat('UKR', { year: 'numeric', month: 'long', day: '2-digit' }).format(new Date()).slice(0, -3)
         const name = `Замовлення від ${date} на ${totalPrice}$`
 
-        const order = await this.createOrderHistory(user, name, totalWeight, productsInOrder)
+        const order = await this.createOrderHistory(user, name, totalWeight, productsInOrder, comment)
 
         return await order.getPublicInfo()
     }

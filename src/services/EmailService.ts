@@ -54,6 +54,7 @@ export class EmailService {
         lastName: string,
         phone?: string,
         livingAddress?: { city?: string; street?: string; additionalInfo?: string },
+        comment?: string,
         userId?: string,
     ) {
         try {
@@ -85,7 +86,11 @@ export class EmailService {
             const msgAdmin = {
                 ...msg,
                 to: 'ekip.auto.production@gmail.com',
-                html: `Користувач <strong>${firstName} ${lastName}</strong> здійснив замовлення.<br> Дані користувача:<br> Місто: ${livingAddress?.city} <br> Адреса: ${livingAddress?.street}<br> Додаткова інформація: ${livingAddress?.additionalInfo}<br> Телефон: ${phone}`,
+                html: `Користувач <strong>${firstName} ${lastName}</strong> здійснив замовлення.<br> Дані користувача:<br> Місто: ${livingAddress?.city} <br> Адреса: ${
+                    livingAddress?.street
+                }<br> ${livingAddress?.additionalInfo ? `Додаткова інформація: ${livingAddress?.additionalInfo}<br>` : ''} Телефон: ${phone}<br> ${
+                    comment ? `Коментарій: ${comment}` : ''
+                }`,
             }
 
             await sgMail.send(msgUser)
