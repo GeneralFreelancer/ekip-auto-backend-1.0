@@ -2,12 +2,15 @@
     "name": "lever",
     "version": "1.0.0",
     "main": "build/app.js",
+    "engines": {
+        "node": "16.14.0"
+      },
     "scripts": {
         "build": "npm run clear && tsc && npm run static && npm run static1",
         "dev": "nodemon src/app.ts -L dev local",
         "dev:prod": "npm run secretes && nodemon src/app.ts -L prod",
         "dev:stage": "npm run secretes && nodemon src/app.ts -L stage local",
-        "start": "npm run build && node build/app.js",
+        "start": "node build/app.js",
         "stage": "npm run secretes && node build/app.js stage",
         "static": "cp -r ./src/images/ ./build/images",
         "static1": "cp -r ./src/excel/ ./build/excel",
