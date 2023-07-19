@@ -2,9 +2,6 @@
     "name": "lever",
     "version": "1.0.0",
     "main": "build/app.js",
-    "engines": {
-        "node": "16.14.0"
-      },
     "scripts": {
         "build": "npm run clear && tsc && npm run static && npm run static1",
         "dev": "nodemon src/app.ts -L dev local",
