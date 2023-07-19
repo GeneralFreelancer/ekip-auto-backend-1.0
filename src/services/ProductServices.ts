@@ -6,6 +6,7 @@ import * as fs from 'fs'
 import { ObjectId } from 'mongodb'
 import UserService from './UserServices'
 import OrderService from './OrderService'
+import { generateRandomNumbers } from '../utils/utils'
 
 export enum ProductFilter {
     DATE = 'date',
@@ -110,7 +111,7 @@ export class ProductService {
     }
 
     static async checkProductsAndGetCategories() {
-        const categories: { category: string; subcategories: string[] }[] = []
+        const categories: { category: string; id: string; subcategories: { id: string; title: string }[] }[] = []
         const products = await ProductModel.find()
         for (let i = 0; i < products.length; i++) {
             const product = products[i]
@@ -118,10 +119,12 @@ export class ProductService {
                 product.hidden = true
                 await product.save()
             }
-            if (product.category && !categories.some(c => c.category === product.category)) categories.push({ category: product.category, subcategories: [] })
+            if (product.category && !categories.some(c => c.category === product.category))
+                categories.push({ category: product.category, id: generateRandomNumbers(6), subcategories: [] })
             if (product.subCategory && product.category) {
                 const index = categories.findIndex(c => c.category === product.category)
-                if (index !== -1 && !categories[index].subcategories.some(sc => sc === product.subCategory)) categories[index].subcategories.push(product.subCategory)
+                if (index !== -1 && !categories[index].subcategories.some(sc => sc.title === product.subCategory))
+                    categories[index].subcategories.push({ id: generateRandomNumbers(6), title: product.subCategory })
             }
         }
 
