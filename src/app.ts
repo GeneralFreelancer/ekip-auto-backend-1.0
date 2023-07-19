@@ -112,4 +112,4 @@ app.use(errorHandler)
 
 const port = config.PORT
 // eslint-disable-next-line no-console
-app.listen(5502, () => console.log(`Test CI/CD. Server runs on the port ${port}. Env : ${process.env.ENV}`))
+app.listen(port, () => console.log(`Test CI/CD. Server runs on the port ${port}. Env : ${process.env.ENV}`))
