@@ -31,7 +31,7 @@ const config = {
         SENTRY_ENV: 'production',
         PORT: 5002,
         IS_LOCAL: isLocal,
-        APP_DOMAIN: 'prismatic-cendol-d39f76.netlify.app',
+        APP_DOMAIN: 'https://ekip-auto.onrender.com',
         CLIENT_URL: 'animated-dragon-b9d633.netlify.app',
         SG_EMAIL: 'ekip.auto.production@gmail.com',
     },
