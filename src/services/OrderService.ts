@@ -17,12 +17,12 @@ export class OrderService {
             const productDB = await ProductService.findProductById(product.product)
             if (productDB) {
                 let weight = 0
-                if (productDB.deliveryOptions && productDB.deliveryOptions.length && productDB.deliveryOptions.some(o => o.name === 'weight')) {
-                    const index = productDB.deliveryOptions.findIndex(o => o.name === 'weight')
-                    weight = Number(productDB.deliveryOptions[index].value)
-                } else if (productDB.options && productDB.options.length && productDB.options.some(o => o.name === 'weight')) {
-                    const index = productDB.options.findIndex(o => o.name === 'weight')
-                    weight = Number(productDB.options[index].value)
+                if (productDB.deliveryOptions && productDB.deliveryOptions.length && productDB.deliveryOptions.some(o => o.name === 'Вага')) {
+                    const index = productDB.deliveryOptions.findIndex(o => o.name === 'Вага')
+                    weight = Number(productDB.deliveryOptions[index].value.replace(/\D/g, ''))
+                } else if (productDB.options && productDB.options.length && productDB.options.some(o => o.name === 'Вага')) {
+                    const index = productDB.options.findIndex(o => o.name === 'Вага')
+                    weight = Number(productDB.options[index].value.replace(/\D/g, ''))
                 }
                 if (!isNaN(weight)) {
                     weight = weight * product.number

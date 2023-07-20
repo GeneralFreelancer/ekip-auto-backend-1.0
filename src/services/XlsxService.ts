@@ -65,12 +65,12 @@ export class XlsxService {
             totalUSD += product.number * (product.product.priceUSD as number)
             totalUAH += product.number * (product.product.priceUAH as number)
             let weight = 0
-            if (product.product.deliveryOptions && product.product.deliveryOptions.length && product.product.deliveryOptions.some((o: any) => o.name === 'weight')) {
-                const index = product.product.deliveryOptions.findIndex((o: any) => o.name === 'weight')
-                weight = Number(product.product.deliveryOptions[index].value)
-            } else if (product.product.options && product.product.options.length && product.product.options.some((o: any) => o.name === 'weight')) {
-                const index = product.product.options.findIndex((o: any) => o.name === 'weight')
-                weight = Number(product.product.options[index].value)
+            if (product.product.deliveryOptions && product.product.deliveryOptions.length && product.product.deliveryOptions.some((o: any) => o.name === 'Вага')) {
+                const index = product.product.deliveryOptions.findIndex((o: any) => o.name === 'Вага')
+                weight = Number(product.product.deliveryOptions[index].value.replace(/\D/g, ''))
+            } else if (product.product.options && product.product.options.length && product.product.options.some((o: any) => o.name === 'Вага')) {
+                const index = product.product.options.findIndex((o: any) => o.name === 'Вага')
+                weight = Number(product.product.options[index].value.replace(/\D/g, ''))
             }
             if (!isNaN(weight)) {
                 weight = weight * product.number
