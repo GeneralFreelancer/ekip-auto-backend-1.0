@@ -1,0 +1,220 @@
+{
+    "products": [
+        {
+            "stock": false,
+            "name": "Lampa is wery good lampaLampa is wery good lampaLampa is wery good",
+            "description": "Lampa is wery good lampaLampa is wery good lampaLampa is wery good",
+            "sku": "435345345",
+            "category": "category1",
+            "subCategory": "subCategory1",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "4353453454",
+            "category": "category2",
+            "subCategory": "subCategory2",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "4353453455",
+            "category": "category3",
+            "subCategory": "subCategory3",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "43534534552",
+            "category": "category4",
+            "subCategory": "subCategory4",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "435345345545",
+            "category": "category3",
+            "subCategory": "subCategory3",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "435345345567",
+            "category": "category3",
+            "subCategory": "subCategory3",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "43533455",
+            "category": "category3",
+            "subCategory": "subCategory3",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "453453455",
+            "category": "category3",
+            "subCategory": "subCategory3",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        },
+        {
+            "stock": true,
+            "name": "Lampa is wery good lampa",
+            "description": "Lampa is wery good lampa",
+            "sku": "4353454653455",
+            "category": "category3",
+            "subCategory": "subCategory3",
+            "quantity": 10000,
+            "minQuantity": 10,
+            "priceUSD": 20,
+            "priceUAH": 800,
+            "options": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ],
+            "deliveryOptions": [
+                {
+                    "name": "weight",
+                    "value": "500"
+                }
+            ]
+        }
+    ]
+}
