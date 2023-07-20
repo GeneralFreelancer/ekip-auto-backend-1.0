@@ -12,8 +12,10 @@ router.get('/:id', ProductController.getOneProduct.handler)
 
 router.put('/', ProductController.updateProduct.middleware, ProductController.updateProduct.handler)
 
+//Add products from 1C API endpoint
 router.post('/add', ProductController.addProducts.middleware, ProductController.addProducts.handler)
 
+//Update products from 1C API endpoint
 router.post('/update', ProductController.updateProducts.middleware, ProductController.updateProducts.handler)
 
 router.post('/image', filesMiddleware.single('image'), ProductController.addImage.middleware, ProductController.addImage.handler)

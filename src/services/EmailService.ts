@@ -28,7 +28,7 @@ export class EmailService {
         }
     }
 
-    static async sendRequestOrderEmail(userEmail: string, firstName: string, lastName: string, productName: string, sku: string) {
+    static async sendRequestOrderEmail(userEmail: string, firstName: string, lastName: string, phone: string, productName: string, sku: string) {
         try {
             const msg = {
                 to: 'ekip.auto.production@gmail.com', // Change to your recipient
@@ -37,7 +37,7 @@ export class EmailService {
                     email: 'ekip.auto.production@gmail.com',
                 }, // Change to your verified sender
                 subject: 'Product request',
-                text: `Користувач ${firstName} ${lastName} зробив запит на товар: ${productName}, арт: ${sku}`,
+                text: `Користувач ${firstName} ${lastName}, телефон: ${phone} зробив запит на товар: ${productName}, арт: ${sku}`,
             }
             const response = await sgMail.send(msg)
             return response

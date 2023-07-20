@@ -23,7 +23,7 @@ const createProductRequest = async (req: Request, res: Response) => {
 
     const productRequest = await ProductRequestService.createProductRequest(user._id, productId)
 
-    await EmailService.sendRequestOrderEmail(user.email, user.firstName as string, user.lastName as string, product.name, product.sku as string)
+    await EmailService.sendRequestOrderEmail(user.email, user.firstName as string, user.lastName as string, user.phone as string, product.name, product.sku as string)
 
     return SendResponse.OK(res, 'Запит створено', { productRequest })
 }

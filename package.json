@@ -5,8 +5,6 @@
     "scripts": {
         "build": "npm run clear && tsc && npm run static && npm run static1",
         "dev": "nodemon src/app.ts -L dev local",
-        "dev:prod": "npm run secretes && nodemon src/app.ts -L prod",
-        "dev:stage": "npm run secretes && nodemon src/app.ts -L stage local",
         "start": "node build/app.js",
         "stage": "npm run secretes && node build/app.js stage",
         "static": "cp -r ./src/images/ ./build/images",

@@ -1,1 +1,0 @@
-declare module 'tookan-api'
