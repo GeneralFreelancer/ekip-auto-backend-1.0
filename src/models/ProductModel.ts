@@ -23,25 +23,25 @@ export class Product {
     @prop({ type: String, required: true })
     public description?: string
 
-    @prop({ type: String, required: true })
+    @prop({ type: String, required: false })
     public sku?: string
 
-    @prop({ type: String, required: true })
+    @prop({ type: String, required: false })
     public category?: string
 
-    @prop({ type: String, required: true })
+    @prop({ type: String, required: false })
     public subCategory?: string
 
-    @prop({ type: Number, required: true })
+    @prop({ type: Number, required: false })
     public quantity?: number
 
-    @prop({ type: Number, required: true })
+    @prop({ type: Number, required: false })
     public minQuantity?: number
 
-    @prop({ type: Number, required: true })
+    @prop({ type: Number, required: false })
     public priceUSD?: number
 
-    @prop({ type: Number, required: true })
+    @prop({ type: Number, required: false })
     public priceUAH?: number
 
     @prop({ type: Array, required: false, _id: false, allowMixed: Severity.ALLOW })
