@@ -4,6 +4,8 @@ import requestVerificationEmail from './requestVerificationEmail'
 import updateData from './updateData'
 import updateFavoriteProducts from './updateFavoriteProducts'
 import updateLastSeenProducts from './updateLastSeenProducts'
+import requestCall from './requestCall'
+import sendPartnerEmail from './sendPartnerEmail'
 
 export default {
     getUser,
@@ -12,4 +14,6 @@ export default {
     updateData,
     updateFavoriteProducts,
     updateLastSeenProducts,
+    requestCall,
+    sendPartnerEmail,
 }

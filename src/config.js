@@ -32,12 +32,12 @@ const config = {
         PORT: 5002,
         IS_LOCAL: isLocal,
         APP_DOMAIN: 'https://ekip-auto.onrender.com',
-        CLIENT_URL: 'animated-dragon-b9d633.netlify.app',
+        CLIENT_URL: 'https://animated-dragon-b9d633.netlify.app',
         SG_EMAIL: 'ekip.auto.production@gmail.com',
     },
 }
 
-const secretesNamesList = ['DB', 'SENDGRID_API_KEY', 'API_URL']
+const secretesNamesList = ['DB', 'SENDGRID_API_KEY']
 
 const secretes = {}
 secretesNamesList.forEach(s => (secretes[s] = process.env[s]))

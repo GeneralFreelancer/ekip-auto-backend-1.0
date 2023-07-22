@@ -12,10 +12,22 @@ const storage = multer.diskStorage({
     },
 })
 
-const types = ['image/png', 'image/jpeg', 'image/jpg']
+// const types = [
+//     'image/png',
+//     'image/jpeg',
+//     'image/jpg',
+//     'application/pdf',
+//     'application/vnd.ms-excel',
+//     'application/vnd.openxmlformats-',
+//     'officedocument.spreadsheetml.sheet',
+//     'text/plain',
+//     'application/msword',
+//     'application/vnd.openxmlformats-',
+//     'officedocument.wordprocessingml.document',
+// ]
 
 const fileFilter = (req: any, file: any, cb: any) => {
-    if (types.includes(file.mimetype)) {
+    if (!file || file.originalname.match(/\.(jpg|jpeg|png|pdf|doc|docx|txt|xls|xlsx|rtf)$/)) {
         cb(null, true)
     } else cb(null, false)
 }

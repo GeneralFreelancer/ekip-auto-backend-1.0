@@ -23,9 +23,9 @@ export class Advertising {
     public updatedAt?: Date
 
     getPublicInfo(this: DocumentType<Advertising>) {
-        const desktop = this.desktop?.map(d => ({ Image: config.API_URL + 'images/' + d.image, url: d.url }))
-        const tablet = this.tablet?.map(d => ({ Image: config.API_URL + 'images/' + d.image, url: d.url }))
-        const mobile = this.mobile?.map(d => ({ Image: config.API_URL + 'images/' + d.image, url: d.url }))
+        const desktop = this.desktop?.map(d => ({ Image: config.APP_DOMAIN + '/images/' + d.image, url: d.url }))
+        const tablet = this.tablet?.map(d => ({ Image: config.APP_DOMAIN + '/images/' + d.image, url: d.url }))
+        const mobile = this.mobile?.map(d => ({ Image: config.APP_DOMAIN + '/images/' + d.image, url: d.url }))
         return {
             desktop,
             tablet,

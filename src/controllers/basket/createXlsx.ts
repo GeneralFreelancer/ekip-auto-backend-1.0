@@ -20,7 +20,7 @@ const createXlsx = async (req: Request, res: Response) => {
 
     await XlsxService.createOrderXlsx(basketInfo.products)
 
-    return SendResponse.OK(res, 'Ексель', { file: config.API_URL + 'excel/order.xlsx' })
+    return SendResponse.OK(res, 'Ексель', { file: config.APP_DOMAIN + '/excel/order.xlsx' })
 }
 
 export default {

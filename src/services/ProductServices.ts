@@ -40,9 +40,9 @@ export class ProductService {
 
     static async updateProducts(products: Partial<Product>[]) {
         for (let i = 0; i < products.length; i++) {
-            const { priceUAH, priceUSD, quantity, sku } = products[i]
+            const { priceUAH, priceUSD, quantity, category, subCategory, sku } = products[i]
             const productDB = await this.findProductBySku(sku as string)
-            if (productDB) await this.updateProduct(productDB._id, { priceUAH, priceUSD, quantity })
+            if (productDB) await this.updateProduct(productDB._id, { priceUAH, priceUSD, quantity, subCategory, category })
         }
         // const productsDB = await ProductModel.find()
         // for (let i = 0; i < productsDB.length; i++) {

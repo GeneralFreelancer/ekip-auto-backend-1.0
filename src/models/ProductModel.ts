@@ -61,7 +61,7 @@ export class Product {
 
     async getPublicInfo(this: DocumentType<Product>) {
         let priceUAH = null
-        const pictures = this.pictures?.map(p => config.API_URL + 'images/' + p)
+        const pictures = this.pictures?.map(p => config.APP_DOMAIN + '/images/' + p)
         const exchange = await ExchangeModel.find()
         if (exchange.length && this.priceUSD) {
             priceUAH = (exchange[0].usdRate as number) * this.priceUSD
