@@ -20,7 +20,7 @@ export class Product {
     @prop({ type: String, required: true })
     public name!: string
 
-    @prop({ type: String, required: true })
+    @prop({ type: String, required: false })
     public description?: string
 
     @prop({ type: String, required: false })
