@@ -40,9 +40,9 @@ export class ProductService {
 
     static async updateProducts(products: Partial<Product>[]) {
         for (let i = 0; i < products.length; i++) {
-            const { priceUAH, priceUSD, quantity, category, subCategory, sku } = products[i]
+            const { priceUAH, priceUSD, quantity, category, subCategory, sku, minQuantity, stock } = products[i]
             const productDB = await this.findProductBySku(sku as string)
-            if (productDB) await this.updateProduct(productDB._id, { priceUAH, priceUSD, quantity, subCategory, category })
+            if (productDB) await this.updateProduct(productDB._id, { priceUAH, priceUSD, quantity, subCategory, category, minQuantity, stock })
         }
         // const productsDB = await ProductModel.find()
         // for (let i = 0; i < productsDB.length; i++) {
@@ -119,8 +119,7 @@ export class ProductService {
                 product.hidden = true
                 await product.save()
             }
-            if (product.category && !categories.some(c => c.category === product.category))
-                categories.push({ category: product.category, id: generateRandomNumbers(6), subcategories: [] })
+            if (product.category && !categories.some(c => c.category === product.category)) categories.push({ category: product.category, id: generateRandomNumbers(6), subcategories: [] })
             if (product.subCategory && product.category) {
                 const index = categories.findIndex(c => c.category === product.category)
                 if (index !== -1 && !categories[index].subcategories.some(sc => sc.title === product.subCategory))
