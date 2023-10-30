@@ -119,7 +119,8 @@ export class ProductService {
                 product.hidden = true
                 await product.save()
             }
-            if (product.category && !categories.some(c => c.category === product.category)) categories.push({ category: product.category, id: generateRandomNumbers(6), subcategories: [] })
+            if (product.category && !categories.some(c => c.category === product.category))
+                categories.push({ category: product.category, id: generateRandomNumbers(6), subcategories: [] })
             if (product.subCategory && product.category) {
                 const index = categories.findIndex(c => c.category === product.category)
                 if (index !== -1 && !categories[index].subcategories.some(sc => sc.title === product.subCategory))

@@ -1,6 +1,6 @@
 import { prop, getModelForClass, DocumentType, Severity } from '@typegoose/typegoose'
-import config from '../config'
-import ExchangeModel from './ExchangeModel'
+// import config from '../config'
+// import ExchangeModel from './ExchangeModel'
 
 type Option = {
     name: string
@@ -39,10 +39,16 @@ export class Product {
     public minQuantity?: number
 
     @prop({ type: Number, required: false })
+    public minQuantity1?: number
+
+    @prop({ type: Number, required: false })
     public priceUSD?: number
 
     @prop({ type: Number, required: false })
     public priceUAH?: number
+
+    @prop({ type: Number, required: false })
+    public priceUSDless?: number
 
     @prop({ type: Array, required: false, _id: false, allowMixed: Severity.ALLOW })
     public options?: Option[]
@@ -60,12 +66,13 @@ export class Product {
     public updatedAt?: Date
 
     async getPublicInfo(this: DocumentType<Product>) {
-        let priceUAH = null
-        const pictures = this.pictures?.map(p => config.APP_DOMAIN + '/images/' + p)
-        const exchange = await ExchangeModel.find()
-        if (exchange.length && this.priceUSD) {
-            priceUAH = (exchange[0].usdRate as number) * this.priceUSD
-        }
+        // let priceUAH = null
+        // config.APP_DOMAIN + '/images/' +
+        const pictures = this.pictures?.map(p => p)
+        // const exchange = await ExchangeModel.find()
+        // if (exchange.length && this.priceUSD) {
+        //     priceUAH = (exchange[0].usdRate as number) * this.priceUSD
+        // }
         return {
             id: this._id,
             inTopRate: this.inTopRate,
@@ -78,8 +85,10 @@ export class Product {
             subCategory: this.subCategory,
             quantity: this.quantity,
             minQuantity: this.minQuantity,
+            minQuantity1: this.minQuantity1,
             priceUSD: this.priceUSD,
-            priceUAH: priceUAH ? priceUAH : this.priceUAH,
+            priceUAH: this.priceUAH,
+            priceUSDless: this.priceUSDless,
             options: this.options,
             deliveryOptions: this.deliveryOptions,
             pictures,

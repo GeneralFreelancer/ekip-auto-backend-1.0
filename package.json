@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "main": "build/app.js",
     "scripts": {
-        "build": "npm run clear && tsc && npm run static && npm run static1",
+        "build": "tsc",
         "dev": "nodemon src/app.ts -L dev local",
         "start": "node build/app.js",
         "stage": "npm run secretes && node build/app.js stage",

@@ -14,7 +14,7 @@ const schema = yup.object().shape({
         .of(
             yup.object().shape({
                 product: yup.string().required(),
-                number: yup.number().required(),
+                quantity: yup.number().required(),
             }),
         )
         .required(),

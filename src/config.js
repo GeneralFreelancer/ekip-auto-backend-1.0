@@ -29,7 +29,7 @@ const config = {
     },
     PROD: {
         SENTRY_ENV: 'production',
-        PORT: 5002,
+        PORT: 8080,
         IS_LOCAL: isLocal,
         APP_DOMAIN: 'https://ekip-auto.onrender.com',
         CLIENT_URL: 'https://animated-dragon-b9d633.netlify.app',
